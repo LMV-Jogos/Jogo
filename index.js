@@ -1,7 +1,7 @@
 const config = {
     type: Phaser.AUTO, 
-    width: 320, 
-    height: 320, 
+    width: 608, 
+    height: 576, 
     parent: "game-container", 
     scene: {
         preload: preload,
@@ -20,19 +20,23 @@ const game = new Phaser.Game(config);
 
 function preload() {
     this.load.image("lab", "assets/lab_tileset.png");
-    this.load.tilemapTiledJSON("map", "assets/jogo.teste.json");
+    this.load.image("ambiente", "assets/tileset.png");
+    this.load.tilemapTiledJSON("map", "assets/teste.json");
 } 
 
 function create() {
     const map = this.make.tilemap({ key: "map" });
 
-    const tileset = map.addTilesetImage("lab_tileset", "lab");
+    const tileset0 = map.addTilesetImage("lab_tileset", "lab");
+    const tileset1 = map.addTilesetImage("tileset", "ambiente");
 
-    const ambiente = map.createStaticLayer("ambiente", tileset, 0, 0);
-    const sala = map.createStaticLayer("moveis", tileset, 0, 0);
-    const sobreMesa = map.createStaticLayer("sobreMesa", tileset, 0, 0);
+    const paredes = map.createStaticLayer("paredes", tileset1, 0, 0);
+    const chao = map.createStaticLayer("chao", tileset1, 0, 0);
+    const moveis = map.createStaticLayer("moveis", tileset0, 0, 0);
+    const sombra = map.createStaticLayer("sombra", tileset1, 0, 0);
+    const sobreMesa = map.createStaticLayer("sobreMesa", tileset0, 0, 0);
     
-}
+} 
 
 function update(time, delta) {
     
