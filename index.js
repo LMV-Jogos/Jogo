@@ -21,7 +21,7 @@ const game = new Phaser.Game(config);
 function preload() {
     this.load.image("lab", "assets/lab_tileset.png");
     this.load.image("ambiente", "assets/tileset.png");
-    this.load.tilemapTiledJSON("map", "assets/teste.json");
+    this.load.tilemapTiledJSON("map", "assets/jogo.teste.json");
 } 
 
 function create() {
