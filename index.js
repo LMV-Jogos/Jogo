@@ -27,9 +27,11 @@ var up;
 var down;
 
 function preload() {
-    this.load.image("lab", "assets/lab_tileset.png");
-    this.load.image("ambiente", "assets/tileset.png");
+    //tilesets
+    this.load.image("tileset", "assets/tileset_final.png");
+    //mapa
     this.load.tilemapTiledJSON("map", "assets/jogo.teste.json");
+    //personagens
     this.load.spritesheet("agatha", "assets/agatha.png", {
         frameWidth: 32,
         frameHeight: 48
@@ -41,20 +43,30 @@ function preload() {
 }
 
 function create() {
+
+    //tilemap
     const map = this.make.tilemap({ key: "map" });
 
-    const tileset0 = map.addTilesetImage("lab_tileset", "lab");
-    const tileset1 = map.addTilesetImage("tileset", "ambiente");
+    const tileset = map.addTilesetImage("tileset_final", "tileset");
 
-    const sombra = map.createStaticLayer("sombra", tileset1, 0, 0);
-    const chao = map.createStaticLayer("chao", tileset1, 0, 0);
-    const paredes = map.createStaticLayer("paredes", tileset1, 0, 0);
-    const moveis = map.createStaticLayer("moveis", tileset0, 0, 0);
-    const sobreMesa = map.createStaticLayer("sobreMesa", tileset0, 0, 0);
+    //camadas
+    const belowLayer = map.createStaticLayer("belowLayer", tileset, 0, 0);
+    const worldLayer = map.createStaticLayer("worldLayer", tileset, 0, 0);
+    const aboveLayer = map.createStaticLayer("aboveLayer", tileset, 0, 0);
+    agatha = this.physics.add.sprite(70, 480, "agatha");
+    beatriz = this.physics.add.sprite(70, 500, "beatriz");
+    const sobreMesa = map.createStaticLayer("sobreMesa", tileset, 0, 0);
 
-    agatha = this.physics.add.sprite(400, 304, "agatha");
-    beatriz = this.physics.add.sprite(400, 380, "beatriz");
+    //colisao com bordas
+    agatha.setCollideWorldBounds(true);
+    beatriz.setCollideWorldBounds(true);
 
+    //colisao com cenario
+    worldLayer.setCollisionByProperty({ collides: true });
+    this.physics.add.collider(agatha, worldLayer);
+    this.physics.add.collider(beatriz, worldLayer);
+
+    //frames para movimentaçao agatha
     this.anims.create({
         key: "left",
         frames: this.anims.generateFrameNumbers("agatha", {
@@ -105,6 +117,7 @@ function create() {
         repeat: -1
     });
 
+    //frames para movimentaçao beatriz
     this.anims.create({
         key: "left1",
         frames: this.anims.generateFrameNumbers("beatriz", {
@@ -163,11 +176,13 @@ function create() {
 }
 
 function update(time, delta) {
+
+    //controle movimentaçao agatha
     if (cursors.left.isDown) {
-        agatha.body.setVelocityX(-100);
+        agatha.body.setVelocityX(-150);
         agatha.anims.play("left", true);
     } else if (cursors.right.isDown) {
-        agatha.body.setVelocityX(100);
+        agatha.body.setVelocityX(150);
         agatha.anims.play("right", true);
     } else {
         agatha.body.setVelocity(0);
@@ -175,22 +190,23 @@ function update(time, delta) {
     }
 
     if (cursors.up.isDown) {
-        agatha.body.setVelocityY(-100);
+        agatha.body.setVelocityY(-150);
         agatha.anims.play("up", true);
     } else if (cursors.down.isDown) {
-        agatha.body.setVelocityY(100);
+        agatha.body.setVelocityY(150);
         agatha.anims.play("down", true);
     } else {
         agatha.body.setVelocityY(0);
     }
 
+    //controle movimentaçao beatriz
     if (left.isDown) {
-        beatriz.body.setVelocityX(-100);
+        beatriz.body.setVelocityX(-150);
 
         beatriz.anims.play("left1", true);
     }
     else if (right.isDown) {
-        beatriz.body.setVelocityX(100);
+        beatriz.body.setVelocityX(150);
 
         beatriz.anims.play("right1", true);
     }
@@ -199,14 +215,13 @@ function update(time, delta) {
         beatriz.anims.play("stopped1", true);
     }
     if (up.isDown) {
-        beatriz.body.setVelocityY(-100);
+        beatriz.body.setVelocityY(-150);
         beatriz.anims.play("up1", true);
     } else if (down.isDown) {
-        beatriz.body.setVelocityY(100);
+        beatriz.body.setVelocityY(150);
         beatriz.anims.play("down1", true);
     } else {
         beatriz.body.setVelocityY(0);
     }
-
 
 }
