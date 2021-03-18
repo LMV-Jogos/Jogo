@@ -47,10 +47,6 @@ function preload() {
 
 function create() {
 
-    // trilha de fundo
-    trilha = this.sound.add("trilha");
-    trilha.play();
-    
     //tilemap
     const map = this.make.tilemap({ key: "map" });
 
