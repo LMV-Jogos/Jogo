@@ -28,11 +28,11 @@ var down;
 var trilha; 
 
 function preload() {
-    //tilesets
+    // tilesets
     this.load.image("tileset", "assets/tileset_final.png");
     //mapa
     this.load.tilemapTiledJSON("map", "assets/jogo.teste.json");
-    //personagens
+    // personagens
     this.load.spritesheet("agatha", "assets/agatha.png", {
         frameWidth: 32,
         frameHeight: 48
@@ -41,18 +41,23 @@ function preload() {
         frameWidth: 32,
         frameHeight: 48
     });
-    this.load.audio("trilha", "assents/trilha.mp3")
+    // carregar trilha sonora
+    this.load.audio("trilha", "assets/trilha.mp3");
 
 }
 
 function create() {
 
-    //tilemap
+    // trilha de fundo
+    //trilha = this.sound.add("trilha");
+    //trilha.play();
+
+    // tilemap
     const map = this.make.tilemap({ key: "map" });
 
     const tileset = map.addTilesetImage("tileset_final", "tileset");
 
-    //camadas
+    // camadas
     const belowLayer = map.createStaticLayer("belowLayer", tileset, 0, 0);
     const worldLayer = map.createStaticLayer("worldLayer", tileset, 0, 0);
     const aboveLayer = map.createStaticLayer("aboveLayer", tileset, 0, 0);
@@ -60,16 +65,16 @@ function create() {
     beatriz = this.physics.add.sprite(70, 500, "beatriz");
     const sobreMesa = map.createStaticLayer("sobreMesa", tileset, 0, 0);
 
-    //colisao com bordas
+    // colisao com bordas
     agatha.setCollideWorldBounds(true);
     beatriz.setCollideWorldBounds(true);
 
-    //colisao com cenario
+    // colisao com cenario
     worldLayer.setCollisionByProperty({ collides: true });
     this.physics.add.collider(agatha, worldLayer);
     this.physics.add.collider(beatriz, worldLayer);
 
-    //frames para movimentaçao agatha
+    // frames para movimentaçao agatha
     this.anims.create({
         key: "left",
         frames: this.anims.generateFrameNumbers("agatha", {
@@ -120,7 +125,7 @@ function create() {
         repeat: -1
     });
 
-    //frames para movimentaçao beatriz
+    // frames para movimentaçao beatriz
     this.anims.create({
         key: "left1",
         frames: this.anims.generateFrameNumbers("beatriz", {
@@ -180,7 +185,7 @@ function create() {
 
 function update(time, delta) {
 
-    //controle movimentaçao agatha
+    // controle movimentaçao agatha
     if (cursors.left.isDown) {
         agatha.body.setVelocityX(-150);
         agatha.anims.play("left", true);
@@ -202,7 +207,7 @@ function update(time, delta) {
         agatha.body.setVelocityY(0);
     }
 
-    //controle movimentaçao beatriz
+    // controle movimentaçao beatriz
     if (left.isDown) {
         beatriz.body.setVelocityX(-150);
 
