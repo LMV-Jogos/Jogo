@@ -25,6 +25,7 @@ var left;
 var right;
 var up;
 var down;
+var trilha; 
 
 function preload() {
     //tilesets
@@ -40,10 +41,16 @@ function preload() {
         frameWidth: 32,
         frameHeight: 48
     });
+    this.load.audio("trilha", "assents/trilha.mp3")
+
 }
 
 function create() {
 
+    // trilha de fundo
+    trilha = this.sound.add("trilha");
+    trilha.play();
+    
     //tilemap
     const map = this.make.tilemap({ key: "map" });
 
