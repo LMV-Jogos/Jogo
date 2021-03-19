@@ -12,9 +12,9 @@ cena0.create = function () {
     //fundo
     this.add.image(400, 300, 'fundo');
     //nome
-    this.add.image(250, 450, "nome");
+    this.add.image(220, 450, "nome");
     //botão
-    var button = this.add.image(400, 420, "botão").setInteractive();
+    var button = this.add.image(390, 420, "botão").setInteractive();
 
     //iniciar cena1
     button.on(

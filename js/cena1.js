@@ -31,8 +31,8 @@ cena1.preload = function () {
 cena1.create = function () {
 
     // trilha de fundo
-    //trilha = this.sound.add("trilha");
-    //trilha.play();
+    trilha = this.sound.add("trilha");
+    trilha.play();
 
     // tilemap
     const map = this.make.tilemap({ key: "map" });
