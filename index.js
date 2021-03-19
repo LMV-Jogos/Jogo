@@ -185,51 +185,71 @@ function create() {
 
 function update(time, delta) {
 
-    // controle movimentaçao agatha
+    // Controle de movimentação de Agatha
     if (cursors.left.isDown) {
         agatha.body.setVelocityX(-150);
-        agatha.anims.play("left", true);
+        // agatha.anims.play("left", true);
     } else if (cursors.right.isDown) {
         agatha.body.setVelocityX(150);
-        agatha.anims.play("right", true);
+        // agatha.anims.play("right", true);
     } else {
         agatha.body.setVelocity(0);
-        agatha.anims.play("stopped", true);
     }
-
     if (cursors.up.isDown) {
         agatha.body.setVelocityY(-150);
-        agatha.anims.play("up", true);
+        // agatha.anims.play("up", true);
     } else if (cursors.down.isDown) {
         agatha.body.setVelocityY(150);
-        agatha.anims.play("down", true);
+        // agatha.anims.play("down", true);
     } else {
         agatha.body.setVelocityY(0);
     }
 
-    // controle movimentaçao beatriz
+    // Animação de Agatha
+    if (cursors.left.isDown) {
+        agatha.anims.play("left", true);
+    } else if (cursors.right.isDown) {
+        agatha.anims.play("right", true);
+    } else if (cursors.up.isDown) {
+        agatha.anims.play("up", true);
+    } else if (cursors.down.isDown) {
+        agatha.anims.play("down", true);
+    } else {
+        agatha.anims.play("stopped", true);
+    }
+
+    // Controle de movimentação de Beatriz
     if (left.isDown) {
         beatriz.body.setVelocityX(-150);
-
-        beatriz.anims.play("left1", true);
-    }
-    else if (right.isDown) {
+        // beatriz.anims.play("left1", true);
+    } else if (right.isDown) {
         beatriz.body.setVelocityX(150);
-
-        beatriz.anims.play("right1", true);
-    }
-    else {
+        // beatriz.anims.play("right1", true);
+    } else {
         beatriz.body.setVelocity(0);
-        beatriz.anims.play("stopped1", true);
+        // beatriz.anims.play("stopped1", true);
     }
     if (up.isDown) {
         beatriz.body.setVelocityY(-150);
-        beatriz.anims.play("up1", true);
+        // beatriz.anims.play("up1", true);
     } else if (down.isDown) {
         beatriz.body.setVelocityY(150);
-        beatriz.anims.play("down1", true);
+        // beatriz.anims.play("down1", true);
     } else {
         beatriz.body.setVelocityY(0);
+    }
+
+    // Animação de Beatriz
+    if (left.isDown) {
+        beatriz.anims.play("left1", true);
+    } else if (right.isDown) {
+        beatriz.anims.play("right1", true);
+    } else if (up.isDown) {
+        beatriz.anims.play("up1", true);
+    } else if (down.isDown) {
+        beatriz.anims.play("down1", true);
+    } else {
+        beatriz.anims.play("stopped1", true);
     }
 
 }
