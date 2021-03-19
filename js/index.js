@@ -1,5 +1,6 @@
 //importar todas as cenas
 import { cena0 } from "./cena0.js";
+import { cena1 } from "./cena1.js";
 
 //configuração do jogo
 const config = {
@@ -13,7 +14,7 @@ const config = {
             gravity: { y: 0 },
         },
     },
-    scene: [cena0],
+    scene: [cena0, cena1],
 }
 
 // Criar o objeto principal

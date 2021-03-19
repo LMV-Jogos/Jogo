@@ -1,3 +1,5 @@
+import { cena1 } from "./cena1.js";
+
 var cena0 = new Phaser.Scene("Cena 0");
 
 cena0.preload = function () {
@@ -16,12 +18,14 @@ cena0.create = function () {
 
     //iniciar cena1
     button.on(
-        "pointerdown",
-        function () {
-            this.scene.start(cena1);
-        },
-        this
+      "pointerdown",
+      function () {
+      this.scene.start(cena1);
+      },
+      this
     );
 }
 
 cena0.update = function () { };
+
+export { cena0 };
