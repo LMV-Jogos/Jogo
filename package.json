@@ -1,5 +1,5 @@
 {
-    "name": "arc20202-servidor",
+    "name": "Jogo-servidor",
     "scripts": {
         "postinstall": "npm install --prefix servidor",
         "start": "npm start --prefix servidor"
