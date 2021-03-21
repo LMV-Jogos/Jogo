@@ -1,3 +1,5 @@
+import { cena2 } from "./cena2.js";
+
 var cena1 = new Phaser.Scene("Cena 1");
 
 var agatha;
@@ -43,8 +45,8 @@ cena1.create = function () {
     const belowLayer = map.createStaticLayer("belowLayer", tileset, 0, 0);
     const worldLayer = map.createStaticLayer("worldLayer", tileset, 0, 0);
     const aboveLayer = map.createStaticLayer("aboveLayer", tileset, 0, 0);
-    agatha = this.physics.add.sprite(70, 480, "agatha");
-    beatriz = this.physics.add.sprite(70, 500, "beatriz");
+    agatha = this.physics.add.sprite(50, 480, "agatha");
+    beatriz = this.physics.add.sprite(60, 510, "beatriz");
     const sobreMesa = map.createStaticLayer("sobreMesa", tileset, 0, 0);
 
     // colisao com bordas

@@ -1,3 +1,5 @@
+import { cena1 } from "./cena1.js";
+
 var cena2 = new Phaser.Scene("Cena 2");
 
 cena2.preload = function () {
