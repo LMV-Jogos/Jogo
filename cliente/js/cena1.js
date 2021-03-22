@@ -18,12 +18,12 @@ cena1.preload = function () {
     this.load.tilemapTiledJSON("map", "assets/jogo.json");
     // personagens
     this.load.spritesheet("agatha", "assets/agatha.png", {
-        frameWidth: 32,
-        frameHeight: 48
+        frameWidth: 40,
+        frameHeight: 60
     });
     this.load.spritesheet("beatriz", "assets/beatriz.png", {
-        frameWidth: 32,
-        frameHeight: 48
+        frameWidth: 40,
+        frameHeight: 60
     });
     // carregar trilha sonora
     this.load.audio("trilha", "assets/trilha.mp3");
