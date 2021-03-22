@@ -15,14 +15,16 @@ cena0.create = function () {
     this.add.image(220, 450, "nome");
     //botão
     var button = this.add.image(390, 420, "botão").setInteractive();
+    //carregar click
+    this.load.audio("click", "assets/click.mp3");
 
     //iniciar cena1
     button.on(
-      "pointerdown",
-      function () {
-      this.scene.start(cena1);
-      },
-      this
+        "pointerdown",
+        function () {
+            this.scene.start(cena1);
+        },
+        this
     );
 }
 
