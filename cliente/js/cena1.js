@@ -32,8 +32,9 @@ cena1.preload = function () {
 
 cena1.create = function () {
 
-    // trilha de fundo
+    // trilha sonora
     trilha = this.sound.add("trilha");
+    trilha.loop = true;
     trilha.play();
 
     // tilemap
