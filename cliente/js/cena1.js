@@ -10,6 +10,9 @@ var right;
 var up;
 var down;
 var trilha;
+var timedEvent;
+var timer = 10;
+var timerText;
 
 cena1.preload = function () {
     // tilesets
@@ -166,9 +169,23 @@ cena1.create = function () {
     left = this.input.keyboard.addKey("A");
     right = this.input.keyboard.addKey("D");
     down = this.input.keyboard.addKey("S");
+
+    // Contagem regressiva em segundos (1.000 milissegundos)
+    timedEvent = this.time.addEvent({
+        delay: 1000,
+        callback: countdown,
+        callbackScope: this,
+        loop: true,
+    });
+
+    // Mostra na tela o contador
+    timerText = this.add.text(32, 32, "10", {
+        fontSize: "32px",
+        fill: "#000",
+    });
 }
 
-cena1.update = function () {
+cena1.update = function (time, delta) {
 
     // Controle de movimentação de Agatha
     if (cursors.left.isDown) {
@@ -237,6 +254,20 @@ cena1.update = function () {
         beatriz.anims.play("stopped1", true);
     }
 
+}
+
+function countdown() {
+    // Reduz o contador em 1 segundo
+    timer -= 1;
+    timerText.setText(timer);
+
+    // Se o contador chegar a zero, inicia a cena 2
+    if (timer === 0) {
+        trilha.stop();
+        this.scene.start(cena2);
+        timer = 10;
+
+    }
 }
 
 //exportar a cena
