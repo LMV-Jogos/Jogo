@@ -11,7 +11,7 @@ var up;
 var down;
 var trilha;
 var timedEvent;
-var timer = 10;
+var timer = 300;
 var timerText;
 
 cena1.preload = function () {
@@ -49,8 +49,8 @@ cena1.create = function () {
     const belowLayer = map.createStaticLayer("belowLayer", tileset, 0, 0);
     const worldLayer = map.createStaticLayer("worldLayer", tileset, 0, 0);
     const aboveLayer = map.createStaticLayer("aboveLayer", tileset, 0, 0);
-    agatha = this.physics.add.sprite(200, 1600, "agatha");
-    beatriz = this.physics.add.sprite(220, 1600, "beatriz");
+    agatha = this.physics.add.sprite(350, 1800, "agatha");
+    beatriz = this.physics.add.sprite(320, 1800, "beatriz");
     const sobreMesa = map.createStaticLayer("sobreMesa", tileset, 0, 0);
 
     // colisao com bordas
@@ -61,6 +61,11 @@ cena1.create = function () {
     worldLayer.setCollisionByProperty({ collides: true });
     this.physics.add.collider(agatha, worldLayer);
     this.physics.add.collider(beatriz, worldLayer);
+
+    this.cameras.main.setBounds(0, 0, 2720, 2240);
+    this.physics.world.setBounds(0, 0, 2720, 2240);
+
+    this.cameras.main.startFollow(agatha);
 
     // frames para movimentaçao agatha
     this.anims.create({
@@ -179,10 +184,11 @@ cena1.create = function () {
     });
 
     // Mostra na tela o contador
-    timerText = this.add.text(32, 32, "10", {
+    timerText = this.add.text(32, 32, "300", {
         fontSize: "32px",
         fill: "#000",
     });
+    timerText.setScrollFactor(0);
 }
 
 cena1.update = function (time, delta) {
@@ -265,7 +271,7 @@ function countdown() {
     if (timer === 0) {
         trilha.stop();
         this.scene.start(cena2);
-        timer = 10;
+        timer = 300;
 
     }
 }
