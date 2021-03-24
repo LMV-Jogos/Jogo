@@ -195,19 +195,19 @@ cena1.update = function (time, delta) {
 
     // Controle de movimentação de Agatha
     if (cursors.left.isDown) {
-        agatha.body.setVelocityX(-150);
+        agatha.body.setVelocityX(-200);
         // agatha.anims.play("left", true);
     } else if (cursors.right.isDown) {
-        agatha.body.setVelocityX(150);
+        agatha.body.setVelocityX(200);
         // agatha.anims.play("right", true);
     } else {
         agatha.body.setVelocity(0);
     }
     if (cursors.up.isDown) {
-        agatha.body.setVelocityY(-150);
+        agatha.body.setVelocityY(-200);
         // agatha.anims.play("up", true);
     } else if (cursors.down.isDown) {
-        agatha.body.setVelocityY(150);
+        agatha.body.setVelocityY(200);
         // agatha.anims.play("down", true);
     } else {
         agatha.body.setVelocityY(0);
