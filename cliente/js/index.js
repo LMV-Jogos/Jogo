@@ -16,6 +16,7 @@ const config = {
         },
     },
     scene: [cena0, cena1, cena2],
+    autoCenter: Phaser.Scale.CENTER_BOTH
 }
 
 // Criar o objeto principal
