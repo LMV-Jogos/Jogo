@@ -10,9 +10,15 @@ var right;
 var up;
 var down;
 var trilha;
-var timedEvent;
-var timer = 300;
-var timerText;
+//var timedEvent;
+//var timer = 300;
+//var timerText;
+var sup;
+var lives = 2;
+var lives1 = 2;
+var livesText;
+var livesText1;
+var virus;
 
 cena1.preload = function () {
     // tilesets
@@ -30,6 +36,10 @@ cena1.preload = function () {
     });
     // carregar trilha sonora
     this.load.audio("trilha", "assets/trilha.mp3");
+    // carregar supressor
+    this.load.image("sup", "assets/seringa.png");
+    //carregar virus
+    this.load.image("virus", "assets/virus.png");
 
 }
 
@@ -175,20 +185,50 @@ cena1.create = function () {
     right = this.input.keyboard.addKey("D");
     down = this.input.keyboard.addKey("S");
 
-    // Contagem regressiva em segundos (1.000 milissegundos)
-    timedEvent = this.time.addEvent({
-        delay: 1000,
-        callback: countdown,
-        callbackScope: this,
-        loop: true,
+    sup = this.physics.add.group({
+        key: 'sup',
+        repeat: 1,
+        setXY: { x: 200, y: 1700, stepX: 300 }
     });
 
-    // Mostra na tela o contador
-    timerText = this.add.text(32, 32, "300", {
-        fontSize: "32px",
+    this.physics.add.overlap(agatha, sup, collectSup, null, this);
+    this.physics.add.overlap(beatriz, sup, collectSup1, null, this);
+
+    //virus = this.physics.add.group({    key: "virus",    repeat: 2,    setXY: { x: 150, y: 1650, stepX: 100 }})
+
+    //this.physics.add.collider(agatha, virus, hitVirus, null, this);
+    //this.physics.add.collider(beatriz, virus, hitVirus1, null, this);
+
+    livesText = this.add.text(10, 10, "Vidas Agatha: 2", {
+        font: "25px monospace",
         fill: "#000",
+        padding: { x: 10, y: 10 },
+        backgroundColor: "#8C3A1C"
     });
-    timerText.setScrollFactor(0);
+    livesText.setScrollFactor(0);
+
+    livesText1 = this.add.text(550, 10, "Vidas Beatriz: 2", {
+        font: "25px monospace",
+        fill: "#000",
+        padding: { x: 10, y: 10 },
+        backgroundColor: "#8C3A1C"
+    });
+    livesText1.setScrollFactor(0);
+
+    // Contagem regressiva em segundos (1.000 milissegundos)
+    // timedEvent = this.time.addEvent({
+    //    delay: 1000,
+    //    callback: countdown,
+    //    callbackScope: this,
+    //    loop: true,
+    // });
+
+    // Mostra na tela o contador
+    //timerText = this.add.text(32, 32, "300", {
+    //    fontSize: "32px",
+    //    fill: "#000",
+    //});
+    //timerText.setScrollFactor(0);
 }
 
 cena1.update = function (time, delta) {
@@ -196,19 +236,15 @@ cena1.update = function (time, delta) {
     // Controle de movimentação de Agatha
     if (cursors.left.isDown) {
         agatha.body.setVelocityX(-200);
-        // agatha.anims.play("left", true);
     } else if (cursors.right.isDown) {
         agatha.body.setVelocityX(200);
-        // agatha.anims.play("right", true);
     } else {
         agatha.body.setVelocity(0);
     }
     if (cursors.up.isDown) {
         agatha.body.setVelocityY(-200);
-        // agatha.anims.play("up", true);
     } else if (cursors.down.isDown) {
         agatha.body.setVelocityY(200);
-        // agatha.anims.play("down", true);
     } else {
         agatha.body.setVelocityY(0);
     }
@@ -229,20 +265,15 @@ cena1.update = function (time, delta) {
     // Controle de movimentação de Beatriz
     if (left.isDown) {
         beatriz.body.setVelocityX(-150);
-        // beatriz.anims.play("left1", true);
     } else if (right.isDown) {
         beatriz.body.setVelocityX(150);
-        // beatriz.anims.play("right1", true);
     } else {
         beatriz.body.setVelocity(0);
-        // beatriz.anims.play("stopped1", true);
     }
     if (up.isDown) {
         beatriz.body.setVelocityY(-150);
-        // beatriz.anims.play("up1", true);
     } else if (down.isDown) {
         beatriz.body.setVelocityY(150);
-        // beatriz.anims.play("down1", true);
     } else {
         beatriz.body.setVelocityY(0);
     }
@@ -262,19 +293,49 @@ cena1.update = function (time, delta) {
 
 }
 
-function countdown() {
-    // Reduz o contador em 1 segundo
-    timer -= 1;
-    timerText.setText(timer);
-
-    // Se o contador chegar a zero, inicia a cena 2
-    if (timer === 0) {
-        trilha.stop();
-        this.scene.start(cena2);
-        timer = 300;
-
-    }
+if (lives <= 0) {
+    this.scene.start(cena2);
+    lives = 2
+    trilha.stop();
 }
+
+if (lives1 <= 0) {
+    this.scene.start(cena2);
+    lives = 2
+    trilha.stop();
+}
+
+function collectSup(agatha, sup) {
+    sup.disableBody(true, true);
+
+    lives += 1;
+    livesText.setText('Vidas Agatha: ' + lives);
+}
+
+function collectSup1(beatriz, sup) {
+    sup.disableBody(true, true);
+
+    lives1 += 1;
+    livesText1.setText('Vidas Beatriz: ' + lives1);
+}
+
+//function hitVirus(agatha, virus) {virus.disableBody(false, false);lives -= 1;livesText.setText('Vidas Agatha: ' + lives);}
+
+//function hitVirus(agatha, bomb) {    this.physics.pause()     agatha.setTint(0xff0000);    agatha.anims.play('turn'); lives -= 1;livesText.setText('Vidas Agatha: ' + lives);}
+
+//function countdown() {
+// Reduz o contador em 1 segundo
+//    timer -= 1;
+//  timerText.setText(timer);
+
+// Se o contador chegar a zero, inicia a cena 2
+//    if (timer === 0) {
+//        trilha.stop();
+//        this.scene.start(cena2);
+//        timer = 300;
+
+//    }
+//}
 
 //exportar a cena
 export { cena1 };
