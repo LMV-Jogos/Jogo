@@ -130,14 +130,14 @@ cena1.create = function () {
         repeat: -1
     });
 
-    this.anims.create({
-        key: "hit",
-        frames: this.anims.generateFrameNumbers("hitA", {
-            start: 0,
-            end: 3
-        }),
+    //this.anims.create({
+    //    key: "hit",
+    //    frames: this.anims.generateFrameNumbers("hitA", {
+    //       start: 0,
+    //        end: 3
+    //    }),
 
-    })
+    //})
 
     // frames para movimentaçao beatriz
     this.anims.create({
@@ -196,20 +196,16 @@ cena1.create = function () {
     right = this.input.keyboard.addKey("D");
     down = this.input.keyboard.addKey("S");
 
-    sup = this.physics.add.group({
-        key: 'sup',
-        repeat: 1,
-        setXY: { x: 200, y: 1700, stepX: 300 }
-    });
+    sup = this.physics.add.group();
+
+    sup.create(200, 1750, "sup");
 
     this.physics.add.overlap(agatha, sup, collectSup, null, this);
     this.physics.add.overlap(beatriz, sup, collectSup1, null, this);
 
-    virus = this.physics.add.staticGroup({
-        key: "virus",
-        repeat: 1,
-        setXY: { x: 200, y: 1650, stepX: 150 }
-    })
+    virus = this.physics.add.staticGroup();
+
+    virus.create(200, 1680, "virus");
 
     this.physics.add.collider(agatha, virus, hitVirus, null, this);
     //this.physics.add.collider(beatriz, virus, hitVirus1, null, this);
