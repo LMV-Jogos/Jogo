@@ -40,6 +40,8 @@ cena1.preload = function () {
     this.load.image("sup", "assets/seringa.png");
     //carregar virus
     this.load.image("virus", "assets/virus.png");
+    // carregar ícone tela fullscreen
+    this.load.spritesheet('fullscreen', 'assets/fullscreen.png', { frameWidth: 46, frameHeight: 50 });
 
     this.load.spritesheet('hitA', 'assets/agathahit.png', { frameWidth: 40, frameHeight: 60 });
 
@@ -218,13 +220,46 @@ cena1.create = function () {
     });
     livesText.setScrollFactor(0);
 
-    livesText1 = this.add.text(550, 10, "Vidas Beatriz: 10", {
+    livesText1 = this.add.text(400, 10, "Vidas Beatriz: 10", {
         font: "25px monospace",
         fill: "#000",
         padding: { x: 10, y: 10 },
         backgroundColor: "#8C3A1C"
     });
     livesText1.setScrollFactor(0);
+
+    // ativar/desativar tela cheia
+    var button = this.add.image(800, 0, "fullscreen", 0).setOrigin(1, 0).setInteractive().setScrollFactor(0);
+
+    button.on(
+        "pointerup",
+        function () {
+            if (this.scale.isFullscreen) {
+                button.setFrame(0);
+                this.scale.stopFullscreen();
+            } else {
+                button.setFrame(1);
+                this.scale.startFullscreen();
+            }
+        },
+        this
+    );
+
+    // Tecla "F" também ativa/desativa tela cheia
+    var FKey = this.input.keyboard.addKey("F");
+    FKey.on(
+        "down",
+        function () {
+            if (this.scale.isFullscreen) {
+                button.setFrame(0);
+                this.scale.stopFullscreen();
+            } else {
+                button.setFrame(1);
+                this.scale.startFullscreen();
+            }
+        },
+        this
+    );
 
     // Contagem regressiva em segundos (1.000 milissegundos)
     // timedEvent = this.time.addEvent({
