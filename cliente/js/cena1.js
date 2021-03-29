@@ -19,6 +19,7 @@ var lives1 = 10;
 var livesText;
 var livesText1;
 var virus;
+var cofre;
 
 cena1.preload = function () {
     // tilesets
@@ -44,6 +45,8 @@ cena1.preload = function () {
     this.load.spritesheet('fullscreen', 'assets/fullscreen.png', { frameWidth: 46, frameHeight: 50 });
 
     this.load.spritesheet('hitA', 'assets/agathahit.png', { frameWidth: 40, frameHeight: 60 });
+
+    this.load.image("cofre", "assets/cofre.png");
 
 }
 
@@ -212,6 +215,11 @@ cena1.create = function () {
 
     this.physics.add.collider(agatha, virus, hitVirus, null, this);
     this.physics.add.collider(beatriz, virus, hitVirus1, null, this);
+
+    cofre = this.physics.add.staticGroup();
+
+    cofre.create(2500, 300, "cofre");
+
 
     livesText = this.add.text(10, 10, "Vidas Agatha: 10", {
         font: "25px monospace",
