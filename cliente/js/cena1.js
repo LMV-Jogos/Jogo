@@ -205,13 +205,32 @@ cena1.create = function () {
     sup = this.physics.add.group();
 
     sup.create(200, 1750, "sup");
+    sup.create(384, 1024, "sup"); // 12, 32
+    sup.create(1024, 1870, "sup"); // 32, 58
+    sup.create(1312, 1504, "sup"); // 41, 47
+    sup.create(2560, 1800, "sup"); // 80, 56
+    sup.create(2240, 1556, "sup"); // 70, 48
+    sup.create(1216, 900, "sup"); // 38, 28
 
     this.physics.add.overlap(agatha, sup, collectSup, null, this);
     this.physics.add.overlap(beatriz, sup, collectSup1, null, this);
 
     virus = this.physics.add.staticGroup();
 
-    virus.create(200, 1680, "virus");
+    virus.create(416, 1344, "virus");// 
+    virus.create(80, 1312, "virus"); //
+    virus.create(512, 160, "virus"); //
+    virus.create(80, 160, "virus");  // 
+    virus.create(256, 300, "virus"); // 8, 9
+    virus.create(1184, 1792, "virus"); // 37, 56
+    virus.create(1088, 1568, "virus"); // 34, 49
+    virus.create(1120, 1450, "virus"); // 35, 45
+    virus.create(2592, 1696, "virus"); // 81, 53
+    virus.create(2208, 1600, "virus"); // 69, 50
+    virus.create(2112, 1824, "virus"); // 66, 57
+    virus.create(1216, 1000, "virus"); // 38, 31
+    virus.create(1120, 800, "virus"); // 35, 25
+    virus.create(1216, 550, "virus"); // 37, 17
 
     this.physics.add.collider(agatha, virus, hitVirus, null, this);
     this.physics.add.collider(beatriz, virus, hitVirus1, null, this);
@@ -385,19 +404,15 @@ cena1.create = function () {
         // reação à colisão
         if (agatha.anims.getCurrentKey() === "up") {
             agatha.body.y += 35;
-            agatha.body.x += 25;
         }
         if (agatha.anims.getCurrentKey() === "left") {
             agatha.body.x += 35;
-            agatha.body.y += 25;
         }
         if (agatha.anims.getCurrentKey() === "right") {
-            agatha.body.x += 35;
-            agatha.body.y += 25;
+            agatha.body.x -= 35;
         }
         if (agatha.anims.getCurrentKey() === "down") {
             agatha.body.y -= 35;
-            agatha.body.x += 25;
         }
 
         lives -= 1;
@@ -413,19 +428,15 @@ cena1.create = function () {
         // reação à colisão
         if (beatriz.anims.getCurrentKey() === "up1") {
             beatriz.body.y += 35;
-            beatriz.body.x += 25;
         }
         if (beatriz.anims.getCurrentKey() === "left1") {
             beatriz.body.x += 35;
-            beatriz.body.y += 25;
         }
         if (beatriz.anims.getCurrentKey() === "right1") {
-            beatriz.body.x += 35;
-            beatriz.body.y += 25;
+            beatriz.body.x -= 35;
         }
         if (beatriz.anims.getCurrentKey() === "down1") {
             beatriz.body.y -= 35;
-            beatriz.body.x += 25;
         }
 
         lives1 -= 1;
