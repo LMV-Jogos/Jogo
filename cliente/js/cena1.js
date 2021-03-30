@@ -20,6 +20,8 @@ var livesText;
 var livesText1;
 var virus;
 var cofre;
+var ganho;
+var perda;
 
 cena1.preload = function () {
     // tilesets
@@ -41,6 +43,10 @@ cena1.preload = function () {
     this.load.image("sup", "assets/seringa.png");
     //carregar virus
     this.load.image("virus", "assets/virus.png");
+    // efeito sonoro ganho de vida
+    this.load.audio("ganho", "assets/ganho.mp3");
+    // efeito sonoro perda de vida
+    this.load.audio("perda", "assets/perda.mp3");
     // carregar ícone tela fullscreen
     this.load.spritesheet('fullscreen', 'assets/fullscreen.png', { frameWidth: 46, frameHeight: 50 });
 
@@ -224,6 +230,9 @@ cena1.create = function () {
     this.physics.add.overlap(agatha, sup, collectSup, null, this);
     this.physics.add.overlap(beatriz, sup, collectSup1, null, this);
 
+    ganho = this.sound.add("ganho");
+
+
     virus = this.physics.add.staticGroup();
 
     virus.create(416, 1344, "virus");// 
@@ -264,6 +273,8 @@ cena1.create = function () {
 
     this.physics.add.collider(agatha, virus, hitVirus, null, this);
     this.physics.add.collider(beatriz, virus, hitVirus1, null, this);
+
+    perda = this.sound.add("perda");
 
     cofre = this.physics.add.staticGroup();
 
@@ -417,6 +428,7 @@ cena1.create = function () {
         // adiciona uma vida
         lives += 1;
         livesText.setText('Vidas Agatha: ' + lives);
+        ganho.play();
     }
 
     function collectSup1(beatriz, sup) {
@@ -424,6 +436,7 @@ cena1.create = function () {
 
         lives1 += 1;
         livesText1.setText('Vidas Beatriz: ' + lives1);
+        ganho.play();
     }
 
     // colidir com obstáculo
@@ -444,7 +457,7 @@ cena1.create = function () {
         if (agatha.anims.getCurrentKey() === "down") {
             agatha.body.y -= 35;
         }
-
+        perda.play();
         lives -= 1;
         livesText.setText("Vidas Agatha: " + lives);
 
@@ -468,7 +481,7 @@ cena1.create = function () {
         if (beatriz.anims.getCurrentKey() === "down1") {
             beatriz.body.y -= 35;
         }
-
+        perda.play();
         lives1 -= 1;
         livesText1.setText("Vidas Beatriz: " + lives1);
 
