@@ -211,6 +211,15 @@ cena1.create = function () {
     sup.create(2560, 1800, "sup"); // 80, 56
     sup.create(2240, 1556, "sup"); // 70, 48
     sup.create(1216, 900, "sup"); // 38, 28
+    sup.create(720, 100, "sup"); // 22, 3
+    sup.create(1641, 70, "sup"); // 51, 2
+    sup.create(1480, 105, "sup"); // 46, 3
+    sup.create(1990, 1024, "sup"); // 62, 32
+    sup.create(1930, 966, "sup"); // 60, 30
+    sup.create(2016, 1184, "sup"); // 63, 37
+    sup.create(2432, 1056, "sup"); // 76, 33
+
+
 
     this.physics.add.overlap(agatha, sup, collectSup, null, this);
     this.physics.add.overlap(beatriz, sup, collectSup1, null, this);
@@ -231,6 +240,27 @@ cena1.create = function () {
     virus.create(1216, 1000, "virus"); // 38, 31
     virus.create(1120, 800, "virus"); // 35, 25
     virus.create(1216, 550, "virus"); // 37, 17
+    virus.create(640, 576, "virus"); // 20, 18
+    virus.create(955, 135, "virus"); // 30, 4
+    virus.create(890, 340, "virus"); // 27, 11
+    virus.create(1700, 105, "virus"); // 53, 3
+    virus.create(1824, 530, "virus"); // 57, 17
+    virus.create(1926, 774, "virus"); // 60, 24
+    virus.create(1592, 758, "virus"); // 50, 23
+    virus.create(2000, 870, "virus"); // 62, 27
+    virus.create(2432, 680, "virus"); // 76, 21
+    virus.create(2368, 710, "virus"); // 74, 22
+    virus.create(2624, 840, "virus"); // 82, 26
+    virus.create(2240, 646, "virus"); // 70, 20
+    virus.create(1590, 1927, "virus"); // 49, 60
+    virus.create(1626, 1820, "virus"); // 51, 57
+    virus.create(1760, 1718, "virus"); // 55, 53
+    
+    
+    
+    
+    
+    
 
     this.physics.add.collider(agatha, virus, hitVirus, null, this);
     this.physics.add.collider(beatriz, virus, hitVirus1, null, this);
