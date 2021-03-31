@@ -10,9 +10,6 @@ var right;
 var up;
 var down;
 var trilha;
-//var timedEvent;
-//var timer = 300;
-//var timerText;
 var sup;
 var lives = 10;
 var lives1 = 10;
@@ -141,16 +138,6 @@ cena1.create = function () {
         repeat: -1
     });
 
-    /* this.anims.create({
-        key: "hit",
-        frames: this.anims.generateFrameNumbers("hitA", {
-            start: 0,
-            end: 3
-        }),
-
-    })
-    */
-
     // frames para movimentaçao beatriz
     this.anims.create({
         key: "left1",
@@ -225,13 +212,10 @@ cena1.create = function () {
     sup.create(2016, 1184, "sup"); // 63, 37
     sup.create(2432, 1056, "sup"); // 76, 33
 
-
-
     this.physics.add.overlap(agatha, sup, collectSup, null, this);
     this.physics.add.overlap(beatriz, sup, collectSup1, null, this);
 
     ganho = this.sound.add("ganho");
-
 
     virus = this.physics.add.staticGroup();
 
@@ -264,12 +248,6 @@ cena1.create = function () {
     virus.create(1590, 1927, "virus"); // 49, 60
     virus.create(1626, 1820, "virus"); // 51, 57
     virus.create(1760, 1718, "virus"); // 55, 53
-    
-    
-    
-    
-    
-    
 
     this.physics.add.collider(agatha, virus, hitVirus, null, this);
     this.physics.add.collider(beatriz, virus, hitVirus1, null, this);
@@ -279,7 +257,6 @@ cena1.create = function () {
     cofre = this.physics.add.staticGroup();
 
     cofre.create(2500, 300, "cofre");
-
 
     livesText = this.add.text(10, 10, "Vidas Agatha: 10", {
         font: "25px monospace",
@@ -329,179 +306,147 @@ cena1.create = function () {
         },
         this
     );
+}
 
-    /* Contagem regressiva em segundos (1.000 milissegundos)
-     timedEvent = this.time.addEvent({
-        delay: 1000,
-        callback: countdown,
-        callbackScope: this,
-        loop: true,
-    });
+cena1.update = function (time, delta) {
 
-    // Mostra na tela o contador
-        timerText = this.add.text(32, 32, "300", {
-        fontSize: "32px",
-        fill: "#000",
-    });
-    timerText.setScrollFactor(0);
-}*/
+    // Controle de movimentação de Agatha
+    if (cursors.left.isDown) {
+        agatha.body.setVelocityX(-200);
+    } else if (cursors.right.isDown) {
+        agatha.body.setVelocityX(200);
+    } else {
+        agatha.body.setVelocity(0);
+    }
+    if (cursors.up.isDown) {
+        agatha.body.setVelocityY(-200);
+    } else if (cursors.down.isDown) {
+        agatha.body.setVelocityY(200);
+    } else {
+        agatha.body.setVelocityY(0);
+    }
 
-    cena1.update = function (time, delta) {
+    // Animação de Agatha
+    if (cursors.left.isDown) {
+        agatha.anims.play("left", true);
+    } else if (cursors.right.isDown) {
+        agatha.anims.play("right", true);
+    } else if (cursors.up.isDown) {
+        agatha.anims.play("up", true);
+    } else if (cursors.down.isDown) {
+        agatha.anims.play("down", true);
+    } else {
+        agatha.anims.play("stopped", true);
+    }
 
-        // Controle de movimentação de Agatha
-        if (cursors.left.isDown) {
-            agatha.body.setVelocityX(-200);
-        } else if (cursors.right.isDown) {
-            agatha.body.setVelocityX(200);
-        } else {
-            agatha.body.setVelocity(0);
-        }
-        if (cursors.up.isDown) {
-            agatha.body.setVelocityY(-200);
-        } else if (cursors.down.isDown) {
-            agatha.body.setVelocityY(200);
-        } else {
-            agatha.body.setVelocityY(0);
-        }
+    // Controle de movimentação de Beatriz
+    if (left.isDown) {
+        beatriz.body.setVelocityX(-150);
+    } else if (right.isDown) {
+        beatriz.body.setVelocityX(150);
+    } else {
+        beatriz.body.setVelocity(0);
+    }
+    if (up.isDown) {
+        beatriz.body.setVelocityY(-150);
+    } else if (down.isDown) {
+        beatriz.body.setVelocityY(150);
+    } else {
+        beatriz.body.setVelocityY(0);
+    }
 
-        // Animação de Agatha
-        if (cursors.left.isDown) {
-            agatha.anims.play("left", true);
-        } else if (cursors.right.isDown) {
-            agatha.anims.play("right", true);
-        } else if (cursors.up.isDown) {
-            agatha.anims.play("up", true);
-        } else if (cursors.down.isDown) {
-            agatha.anims.play("down", true);
-        } else {
-            agatha.anims.play("stopped", true);
-        }
+    // Animação de Beatriz
+    if (left.isDown) {
+        beatriz.anims.play("left1", true);
+    } else if (right.isDown) {
+        beatriz.anims.play("right1", true);
+    } else if (up.isDown) {
+        beatriz.anims.play("up1", true);
+    } else if (down.isDown) {
+        beatriz.anims.play("down1", true);
+    } else {
+        beatriz.anims.play("stopped1", true);
+    }
 
-        // Controle de movimentação de Beatriz
-        if (left.isDown) {
-            beatriz.body.setVelocityX(-150);
-        } else if (right.isDown) {
-            beatriz.body.setVelocityX(150);
-        } else {
-            beatriz.body.setVelocity(0);
-        }
-        if (up.isDown) {
-            beatriz.body.setVelocityY(-150);
-        } else if (down.isDown) {
-            beatriz.body.setVelocityY(150);
-        } else {
-            beatriz.body.setVelocityY(0);
-        }
-
-        // Animação de Beatriz
-        if (left.isDown) {
-            beatriz.anims.play("left1", true);
-        } else if (right.isDown) {
-            beatriz.anims.play("right1", true);
-        } else if (up.isDown) {
-            beatriz.anims.play("up1", true);
-        } else if (down.isDown) {
-            beatriz.anims.play("down1", true);
-        } else {
-            beatriz.anims.play("stopped1", true);
-        }
-
-        // vida agatha, caso chegue a 0 o jogo acaba e a tela de encerramento inicia
-        if (lives <= 0) {
-            this.scene.start(cena2);
-            lives = 2
-            trilha.stop();
-        }
+    // vida agatha, caso chegue a 0 o jogo acaba e a tela de encerramento inicia
+    if (lives <= 0) {
+        this.scene.start(cena2);
+        lives = 2
+        trilha.stop();
+    }
 
         // vida beatriz, caso chegue a 0 o jogo acaba e a tela de encerramento inicia
-        if (lives1 <= 0) {
-            this.scene.start(cena2);
-            lives = 2
-            trilha.stop();
-        }
-    }
-
-    // coletar supressores
-    function collectSup(agatha, sup) {
-        // com colisão o sprite sup desaparece
-        sup.disableBody(true, true);
-        // adiciona uma vida
-        lives += 1;
-        livesText.setText('Vidas Agatha: ' + lives);
-        ganho.play();
-    }
-
-    function collectSup1(beatriz, sup) {
-        sup.disableBody(true, true);
-
-        lives1 += 1;
-        livesText1.setText('Vidas Beatriz: ' + lives1);
-        ganho.play();
-    }
-
-    // colidir com obstáculo
-    function hitVirus(agatha, virus) {
-
-        //agatha.setTint(0xffffff); 
-
-        // reação à colisão
-        if (agatha.anims.getCurrentKey() === "up") {
-            agatha.body.y += 35;
-        }
-        if (agatha.anims.getCurrentKey() === "left") {
-            agatha.body.x += 35;
-        }
-        if (agatha.anims.getCurrentKey() === "right") {
-            agatha.body.x -= 35;
-        }
-        if (agatha.anims.getCurrentKey() === "down") {
-            agatha.body.y -= 35;
-        }
-        perda.play();
-        lives -= 1;
-        livesText.setText("Vidas Agatha: " + lives);
-
-        //agatha.setTint(0xffffff);   
-    }
-
-    function hitVirus1(beatriz, virus) {
-
-        //beatriz.setTint(0xffffff); 
-
-        // reação à colisão
-        if (beatriz.anims.getCurrentKey() === "up1") {
-            beatriz.body.y += 35;
-        }
-        if (beatriz.anims.getCurrentKey() === "left1") {
-            beatriz.body.x += 35;
-        }
-        if (beatriz.anims.getCurrentKey() === "right1") {
-            beatriz.body.x -= 35;
-        }
-        if (beatriz.anims.getCurrentKey() === "down1") {
-            beatriz.body.y -= 35;
-        }
-        perda.play();
-        lives1 -= 1;
-        livesText1.setText("Vidas Beatriz: " + lives1);
-
-        //beatriz.setTint(0xffffff);   
+    if (lives1 <= 0) {
+        this.scene.start(cena2);
+        lives = 2
+        trilha.stop();
     }
 }
 
-//function countdown() {
-// Reduz o contador em 1 segundo
-//    timer -= 1;
-//  timerText.setText(timer);
+// coletar supressores
+function collectSup(agatha, sup) {
+    // com colisão o sprite sup desaparece
+    sup.disableBody(true, true);
+    // adiciona uma vida
+    lives += 1;
+    livesText.setText('Vidas Agatha: ' + lives);
+    ganho.play();
+}
 
-// Se o contador chegar a zero, inicia a cena 2
-//    if (timer === 0) {
-//        trilha.stop();
-//        this.scene.start(cena2);
-//        timer = 300;
+function collectSup1(beatriz, sup) {
+    sup.disableBody(true, true);
 
-//    }
-//}
+    lives1 += 1;
+    livesText1.setText('Vidas Beatriz: ' + lives1);
+    ganho.play();
+}
 
-//exportar a cena
+// colidir com obstáculo
+function hitVirus(agatha, virus) {
+
+    //agatha.setTint(0xffffff); 
+    // reação à colisão
+    if (agatha.anims.getCurrentKey() === "up") {
+        agatha.body.y += 35;
+    }
+    if (agatha.anims.getCurrentKey() === "left") {
+        agatha.body.x += 35;
+    }
+    if (agatha.anims.getCurrentKey() === "right") {
+        agatha.body.x -= 35;
+    }
+    if (agatha.anims.getCurrentKey() === "down") {
+        agatha.body.y -= 35;
+    }
+    perda.play();
+    lives -= 1;
+    livesText.setText("Vidas Agatha: " + lives);
+
+    //agatha.setTint(0xffffff);   
+}
+
+function hitVirus1(beatriz, virus) {
+
+    //beatriz.setTint(0xffffff); 
+
+    // reação à colisão
+    if (beatriz.anims.getCurrentKey() === "up1") {
+        beatriz.body.y += 35;
+    }
+    if (beatriz.anims.getCurrentKey() === "left1") {
+        beatriz.body.x += 35;
+    }
+    if (beatriz.anims.getCurrentKey() === "right1") {
+        beatriz.body.x -= 35;
+    }
+    if (beatriz.anims.getCurrentKey() === "down1") {
+        beatriz.body.y -= 35;
+    }
+    perda.play();
+    lives1 -= 1;
+    livesText1.setText("Vidas Beatriz: " + lives1);
+
+    //beatriz.setTint(0xffffff);   
+}
+
 export { cena1 };
