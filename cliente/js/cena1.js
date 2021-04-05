@@ -379,59 +379,7 @@ cena1.create = function () {
 cena1.update = function (time, delta) {
 
     if (jogador === 1) {
-        if (cursors.left.isDown) {
-            agatha.body.setVelocityX(-200);
-            agatha.anims.play("left", true);
-        } else if (cursors.right.isDown) {
-            agatha.body.setVelocityX(200);
-            agatha.anims.play("right", true);
-        } else {
-            agatha.body.setVelocity(0);
-            agatha.anims.play("stopped", true);
-        }
-        if (cursors.up.isDown) {
-            agatha.body.setVelocityY(-200);
-            agatha.anims.play("up", true);
-        } else if (cursors.down.isDown) {
-            agatha.body.setVelocityY(200);
-            agatha.anims.play("down", true);
-        } else {
-            agatha.body.setVelocityY(0);
-            agatha.anims.play("stopped", true);
-        }
-        this.socket.emit("estadoDoJogador", {
-            frame: player1.anims.currentFrame.index,
-            x: agatha.body.x,
-            y: agatha.body.y,
-        });
-    } else if (jogador === 2) {
-        if (cursors.left.isDown) {
-            beatriz.body.setVelocityX(-200);
-            beatriz.anims.play("left1", true);
-        } else if (cursors.right.isDown) {
-            beatriz.body.setVelocityX(200);
-            beatriz.anims.play("right1", true);
-        } else {
-            beatriz.body.setVelocity(0);
-            beatriz.anims.play("stopped1", true);
-        }
-        if (cursors.up.isDown) {
-            beatriz.body.setVelocityY(-200);
-            beatriz.anims.play("up1", true);
-        } else if (cursors.down.isDown) {
-            beatriz.body.setVelocityY(200);
-            beatriz.anims.play("down1", true);
-        } else {
-            beatriz.body.setVelocityY(0);
-            beatriz.anims.play("stopped1", true);
-        }
-        this.socket.emit("estadoDoJogador", {
-            x: beatriz.body.x,
-            y: beatriz.body.y,
-        });
-    }
-    /*
-        // Controle de movimentação de Agatha
+        // Controle agatha
         if (cursors.left.isDown) {
             agatha.body.setVelocityX(-200);
         } else if (cursors.right.isDown) {
@@ -446,8 +394,7 @@ cena1.update = function (time, delta) {
         } else {
             agatha.body.setVelocityY(0);
         }
-    
-        // Animação de Agatha
+        // Animação agatha
         if (cursors.left.isDown) {
             agatha.anims.play("left", true);
         } else if (cursors.right.isDown) {
@@ -459,8 +406,13 @@ cena1.update = function (time, delta) {
         } else {
             agatha.anims.play("stopped", true);
         }
-    
-        // Controle de movimentação de Beatriz
+        this.socket.emit("estadoDoJogador", {
+            frame: player1.anims.currentFrame.index,
+            x: agatha.body.x,
+            y: agatha.body.y,
+        });
+    } else if (jogador === 2) {
+        // Controle beatriz
         if (left.isDown) {
             beatriz.body.setVelocityX(-150);
         } else if (right.isDown) {
@@ -475,7 +427,6 @@ cena1.update = function (time, delta) {
         } else {
             beatriz.body.setVelocityY(0);
         }
-    
         // Animação de Beatriz
         if (left.isDown) {
             beatriz.anims.play("left1", true);
@@ -488,7 +439,11 @@ cena1.update = function (time, delta) {
         } else {
             beatriz.anims.play("stopped1", true);
         }
-        */
+        this.socket.emit("estadoDoJogador", {
+            x: beatriz.body.x,
+            y: beatriz.body.y,
+        });
+    }
 
     // Vida agatha, caso chegue a 0 o jogo acaba e a tela de encerramento inicia
     if (lives <= 0) {
