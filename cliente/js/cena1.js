@@ -5,10 +5,10 @@ var cena1 = new Phaser.Scene("Cena 1");
 var agatha;
 var cursors;
 var beatriz;
-var left;
+/*var left;
 var right;
 var up;
-var down;
+var down;*/
 var trilha;
 var sup;
 var lives = 10;
@@ -19,6 +19,7 @@ var virus;
 var cofre;
 var ganho;
 var perda;
+var jogador;
 
 cena1.preload = function () {
     // tilesets
@@ -55,17 +56,17 @@ cena1.preload = function () {
 
 cena1.create = function () {
 
-    // trilha sonora
+    // Trilha Sonora
     trilha = this.sound.add("trilha");
     trilha.loop = true;
     trilha.play();
 
-    // tilemap
+    // Tilemap
     const map = this.make.tilemap({ key: "map" });
 
     const tileset = map.addTilesetImage("tileset_final", "tileset");
 
-    // camadas
+    // Camadas
     const belowLayer = map.createStaticLayer("belowLayer", tileset, 0, 0);
     const worldLayer = map.createStaticLayer("worldLayer", tileset, 0, 0);
     const aboveLayer = map.createStaticLayer("aboveLayer", tileset, 0, 0);
@@ -73,21 +74,23 @@ cena1.create = function () {
     beatriz = this.physics.add.sprite(320, 1800, "beatriz");
     const sobreMesa = map.createStaticLayer("sobreMesa", tileset, 0, 0);
 
-    // colisao com bordas
-    agatha.setCollideWorldBounds(true);
-    beatriz.setCollideWorldBounds(true);
-
-    // colisao com cenario
     worldLayer.setCollisionByProperty({ collides: true });
-    this.physics.add.collider(agatha, worldLayer);
-    this.physics.add.collider(beatriz, worldLayer);
 
+    // Colisao com Bordas
+    //agatha.setCollideWorldBounds(true);
+    //beatriz.setCollideWorldBounds(true);
+
+    // Colisao com Cenario
+    //this.physics.add.collider(agatha, worldLayer);
+    //this.physics.add.collider(beatriz, worldLayer);
+
+    // Limites de Câmera
     this.cameras.main.setBounds(0, 0, 2720, 2240);
     this.physics.world.setBounds(0, 0, 2720, 2240);
 
-    this.cameras.main.startFollow(agatha);
+    //this.cameras.main.startFollow(agatha);
 
-    // frames para movimentaçao agatha
+    // Frames para movimentaçao agatha
     this.anims.create({
         key: "left",
         frames: this.anims.generateFrameNumbers("agatha", {
@@ -138,7 +141,7 @@ cena1.create = function () {
         repeat: -1
     });
 
-    // frames para movimentaçao beatriz
+    // Frames para movimentaçao beatriz
     this.anims.create({
         key: "left1",
         frames: this.anims.generateFrameNumbers("beatriz", {
@@ -190,11 +193,11 @@ cena1.create = function () {
     });
 
     cursors = this.input.keyboard.createCursorKeys();
-    up = this.input.keyboard.addKey("W");
+    /*up = this.input.keyboard.addKey("W");
     left = this.input.keyboard.addKey("A");
     right = this.input.keyboard.addKey("D");
     down = this.input.keyboard.addKey("S");
-
+    */
     sup = this.physics.add.group();
 
     sup.create(200, 1750, "sup");
@@ -212,8 +215,8 @@ cena1.create = function () {
     sup.create(2016, 1184, "sup"); // 63, 37
     sup.create(2432, 1056, "sup"); // 76, 33
 
-    this.physics.add.overlap(agatha, sup, collectSup, null, this);
-    this.physics.add.overlap(beatriz, sup, collectSup1, null, this);
+    //this.physics.add.overlap(agatha, sup, collectSup, null, this);
+    //this.physics.add.overlap(beatriz, sup, collectSup1, null, this);
 
     ganho = this.sound.add("ganho");
 
@@ -249,8 +252,8 @@ cena1.create = function () {
     virus.create(1626, 1820, "virus"); // 51, 57
     virus.create(1760, 1718, "virus"); // 55, 53
 
-    this.physics.add.collider(agatha, virus, hitVirus, null, this);
-    this.physics.add.collider(beatriz, virus, hitVirus1, null, this);
+    //this.physics.add.collider(agatha, virus, hitVirus, null, this);
+    //this.physics.add.collider(beatriz, virus, hitVirus1, null, this);
 
     perda = this.sound.add("perda");
 
@@ -306,76 +309,195 @@ cena1.create = function () {
         },
         this
     );
+
+    // Conectar no servidor via WebSocket
+    this.socket = io();
+
+    // Disparar evento quando jogador entrar na partida
+    var self = this;
+    var physics = this.physics;
+    var cameras = this.cameras;
+
+    this.socket.on("jogadores", function (jogadores) {
+        if (jogadores.primeiro !== undefined && jogadores.segundo !== undefined) {
+            if (jogadores.primeiro === self.socket.id) {
+                // Define jogador como o primeiro
+                jogador = 1;
+
+                // Personagens colidem com os limites da cena
+                agatha.setCollideWorldBounds(true);
+
+                // Detecção de colisão: cenário
+                physics.add.collider(agatha, worldLayer);
+
+                // Detecção de colisão e disparo de evento: sup
+                physics.add.overlap(agatha, sup, collectSup, null, this);
+
+                // Detecção de colisão e disparo de evento: vírus
+                physics.add.collider(agatha, virus, hitVirus, null, this);
+
+                // Câmera seguindo o personagem 1
+                cameras.main.startFollow(agatha);
+
+            } else if (jogadores.segundo === self.socket.id) {
+                // Define jogador como o segundo
+                jogador = 2;
+
+                // Personagens colidem com os limites da cena
+                beatriz.setCollideWorldBounds(true);
+
+                // Detecção de colisão: cenário
+                physics.add.collider(beatriz, worldLayer);
+
+                // Detecção de colisão e disparo de evento: sup
+                physics.add.overlap(beatriz, sup, collectSup, null, this);
+
+                // Detecção de colisão e disparo de evento: vírus
+                physics.add.collider(beatriz, virus, hitVirus, null, this);
+
+                // Câmera seguindo o personagem 2
+                cameras.main.startFollow(beatriz);
+            }
+        }
+    });
+
+    // Desenhar o outro jogador
+    this.socket.on("desenharOutroJogador", ({ frame, x, y }) => {
+        if (jogador === 1) {
+            beatriz.setFrame(frame);
+            beatriz.x = x;
+            beatriz.y = y;
+        } else if (jogador === 2) {
+            agatha.setFrame(frame);
+            agatha.x = x;
+            agatha.y = y;
+        }
+    });
+
 }
 
 cena1.update = function (time, delta) {
 
-    // Controle de movimentação de Agatha
-    if (cursors.left.isDown) {
-        agatha.body.setVelocityX(-200);
-    } else if (cursors.right.isDown) {
-        agatha.body.setVelocityX(200);
-    } else {
-        agatha.body.setVelocity(0);
+    if (jogador === 1) {
+        if (cursors.left.isDown) {
+            agatha.body.setVelocityX(-200);
+            agatha.anims.play("left", true);
+        } else if (cursors.right.isDown) {
+            agatha.body.setVelocityX(200);
+            agatha.anims.play("right", true);
+        } else {
+            agatha.body.setVelocity(0);
+            agatha.anims.play("stopped", true);
+        }
+        if (cursors.up.isDown) {
+            agatha.body.setVelocityY(-200);
+            agatha.anims.play("up", true);
+        } else if (cursors.down.isDown) {
+            agatha.body.setVelocityY(200);
+            agatha.anims.play("down", true);
+        } else {
+            agatha.body.setVelocityY(0);
+            agatha.anims.play("stopped", true);
+        }
+        this.socket.emit("estadoDoJogador", {
+            frame: player1.anims.currentFrame.index,
+            x: agatha.body.x,
+            y: agatha.body.y,
+        });
+    } else if (jogador === 2) {
+        if (cursors.left.isDown) {
+            beatriz.body.setVelocityX(-200);
+            beatriz.anims.play("left1", true);
+        } else if (cursors.right.isDown) {
+            beatriz.body.setVelocityX(200);
+            beatriz.anims.play("right1", true);
+        } else {
+            beatriz.body.setVelocity(0);
+            beatriz.anims.play("stopped1", true);
+        }
+        if (cursors.up.isDown) {
+            beatriz.body.setVelocityY(-200);
+            beatriz.anims.play("up1", true);
+        } else if (cursors.down.isDown) {
+            beatriz.body.setVelocityY(200);
+            beatriz.anims.play("down1", true);
+        } else {
+            beatriz.body.setVelocityY(0);
+            beatriz.anims.play("stopped1", true);
+        }
+        this.socket.emit("estadoDoJogador", {
+            x: beatriz.body.x,
+            y: beatriz.body.y,
+        });
     }
-    if (cursors.up.isDown) {
-        agatha.body.setVelocityY(-200);
-    } else if (cursors.down.isDown) {
-        agatha.body.setVelocityY(200);
-    } else {
-        agatha.body.setVelocityY(0);
-    }
+    /*
+        // Controle de movimentação de Agatha
+        if (cursors.left.isDown) {
+            agatha.body.setVelocityX(-200);
+        } else if (cursors.right.isDown) {
+            agatha.body.setVelocityX(200);
+        } else {
+            agatha.body.setVelocity(0);
+        }
+        if (cursors.up.isDown) {
+            agatha.body.setVelocityY(-200);
+        } else if (cursors.down.isDown) {
+            agatha.body.setVelocityY(200);
+        } else {
+            agatha.body.setVelocityY(0);
+        }
+    
+        // Animação de Agatha
+        if (cursors.left.isDown) {
+            agatha.anims.play("left", true);
+        } else if (cursors.right.isDown) {
+            agatha.anims.play("right", true);
+        } else if (cursors.up.isDown) {
+            agatha.anims.play("up", true);
+        } else if (cursors.down.isDown) {
+            agatha.anims.play("down", true);
+        } else {
+            agatha.anims.play("stopped", true);
+        }
+    
+        // Controle de movimentação de Beatriz
+        if (left.isDown) {
+            beatriz.body.setVelocityX(-150);
+        } else if (right.isDown) {
+            beatriz.body.setVelocityX(150);
+        } else {
+            beatriz.body.setVelocity(0);
+        }
+        if (up.isDown) {
+            beatriz.body.setVelocityY(-150);
+        } else if (down.isDown) {
+            beatriz.body.setVelocityY(150);
+        } else {
+            beatriz.body.setVelocityY(0);
+        }
+    
+        // Animação de Beatriz
+        if (left.isDown) {
+            beatriz.anims.play("left1", true);
+        } else if (right.isDown) {
+            beatriz.anims.play("right1", true);
+        } else if (up.isDown) {
+            beatriz.anims.play("up1", true);
+        } else if (down.isDown) {
+            beatriz.anims.play("down1", true);
+        } else {
+            beatriz.anims.play("stopped1", true);
+        }
+        */
 
-    // Animação de Agatha
-    if (cursors.left.isDown) {
-        agatha.anims.play("left", true);
-    } else if (cursors.right.isDown) {
-        agatha.anims.play("right", true);
-    } else if (cursors.up.isDown) {
-        agatha.anims.play("up", true);
-    } else if (cursors.down.isDown) {
-        agatha.anims.play("down", true);
-    } else {
-        agatha.anims.play("stopped", true);
-    }
-
-    // Controle de movimentação de Beatriz
-    if (left.isDown) {
-        beatriz.body.setVelocityX(-150);
-    } else if (right.isDown) {
-        beatriz.body.setVelocityX(150);
-    } else {
-        beatriz.body.setVelocity(0);
-    }
-    if (up.isDown) {
-        beatriz.body.setVelocityY(-150);
-    } else if (down.isDown) {
-        beatriz.body.setVelocityY(150);
-    } else {
-        beatriz.body.setVelocityY(0);
-    }
-
-    // Animação de Beatriz
-    if (left.isDown) {
-        beatriz.anims.play("left1", true);
-    } else if (right.isDown) {
-        beatriz.anims.play("right1", true);
-    } else if (up.isDown) {
-        beatriz.anims.play("up1", true);
-    } else if (down.isDown) {
-        beatriz.anims.play("down1", true);
-    } else {
-        beatriz.anims.play("stopped1", true);
-    }
-
-    // vida agatha, caso chegue a 0 o jogo acaba e a tela de encerramento inicia
+    // Vida agatha, caso chegue a 0 o jogo acaba e a tela de encerramento inicia
     if (lives <= 0) {
         this.scene.start(cena2);
         lives = 2
         trilha.stop();
     }
 
-        // vida beatriz, caso chegue a 0 o jogo acaba e a tela de encerramento inicia
+    // Vida beatriz, caso chegue a 0 o jogo acaba e a tela de encerramento inicia
     if (lives1 <= 0) {
         this.scene.start(cena2);
         lives = 2
