@@ -317,6 +317,7 @@ cena1.create = function () {
     var self = this;
     var physics = this.physics;
     var cameras = this.cameras;
+    var socket = this.socket;
 
     this.socket.on("jogadores", function (jogadores) {
         if (jogadores.primeiro !== undefined && jogadores.segundo !== undefined) {
@@ -350,10 +351,10 @@ cena1.create = function () {
                 physics.add.collider(beatriz, worldLayer);
 
                 // Detecção de colisão e disparo de evento: sup
-                physics.add.overlap(beatriz, sup, collectSup, null, this);
+                physics.add.overlap(beatriz, sup, collectSup1, null, this);
 
                 // Detecção de colisão e disparo de evento: vírus
-                physics.add.collider(beatriz, virus, hitVirus, null, this);
+                physics.add.collider(beatriz, virus, hitVirus1, null, this);
 
                 // Câmera seguindo o personagem 2
                 cameras.main.startFollow(beatriz);
@@ -365,12 +366,12 @@ cena1.create = function () {
     this.socket.on("desenharOutroJogador", ({ frame, x, y }) => {
         if (jogador === 1) {
             beatriz.setFrame(frame);
-            beatriz.x = x;
-            beatriz.y = y;
+            beatriz.x = x + 20;
+            beatriz.y = y + 25;
         } else if (jogador === 2) {
             agatha.setFrame(frame);
-            agatha.x = x;
-            agatha.y = y;
+            agatha.x = x + 20;
+            agatha.y = y + 25;
         }
     });
 
@@ -385,7 +386,7 @@ cena1.update = function (time, delta) {
         } else if (cursors.right.isDown) {
             agatha.body.setVelocityX(200);
         } else {
-            agatha.body.setVelocity(0);
+            agatha.body.setVelocityX(0);
         }
         if (cursors.up.isDown) {
             agatha.body.setVelocityY(-200);
@@ -407,39 +408,40 @@ cena1.update = function (time, delta) {
             agatha.anims.play("stopped", true);
         }
         this.socket.emit("estadoDoJogador", {
-            frame: player1.anims.currentFrame.index,
+            frame: agatha.anims.currentFrame.index,
             x: agatha.body.x,
             y: agatha.body.y,
         });
     } else if (jogador === 2) {
         // Controle beatriz
-        if (left.isDown) {
+        if (cursors.left.isDown) {
             beatriz.body.setVelocityX(-150);
-        } else if (right.isDown) {
+        } else if (cursors.right.isDown) {
             beatriz.body.setVelocityX(150);
         } else {
-            beatriz.body.setVelocity(0);
+            beatriz.body.setVelocityX(0);
         }
-        if (up.isDown) {
+        if (cursors.up.isDown) {
             beatriz.body.setVelocityY(-150);
-        } else if (down.isDown) {
+        } else if (cursors.down.isDown) {
             beatriz.body.setVelocityY(150);
         } else {
             beatriz.body.setVelocityY(0);
         }
         // Animação de Beatriz
-        if (left.isDown) {
+        if (cursors.left.isDown) {
             beatriz.anims.play("left1", true);
-        } else if (right.isDown) {
+        } else if (cursors.right.isDown) {
             beatriz.anims.play("right1", true);
-        } else if (up.isDown) {
+        } else if (cursors.up.isDown) {
             beatriz.anims.play("up1", true);
-        } else if (down.isDown) {
+        } else if (cursors.down.isDown) {
             beatriz.anims.play("down1", true);
         } else {
             beatriz.anims.play("stopped1", true);
         }
         this.socket.emit("estadoDoJogador", {
+            frame: beatriz.anims.currentFrame.index,
             x: beatriz.body.x,
             y: beatriz.body.y,
         });
