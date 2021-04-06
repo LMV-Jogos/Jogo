@@ -18,7 +18,7 @@ cena0.create = function () {
     //nome
     this.add.image(400, 300, "capa");
     //botão
-    button = this.add.image(390, 420, "botão").setInteractive();
+    button = this.add.image(550, 420, "botão").setInteractive();
 
     click = this.sound.add("click");
 
