@@ -48,8 +48,6 @@ cena1.preload = function () {
     // carregar ícone tela fullscreen
     this.load.spritesheet('fullscreen', 'assets/fullscreen.png', { frameWidth: 46, frameHeight: 50 });
 
-    this.load.spritesheet('hitA', 'assets/agathahit.png', { frameWidth: 40, frameHeight: 60 });
-
     this.load.image("cofre", "assets/cofre.png");
 
 }
