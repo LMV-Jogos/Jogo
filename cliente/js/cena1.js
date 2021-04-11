@@ -413,16 +413,16 @@ cena1.update = function (time, delta) {
     } else if (jogador === 2) {
         // Controle beatriz
         if (cursors.left.isDown) {
-            beatriz.body.setVelocityX(-150);
+            beatriz.body.setVelocityX(-200);
         } else if (cursors.right.isDown) {
-            beatriz.body.setVelocityX(150);
+            beatriz.body.setVelocityX(200);
         } else {
             beatriz.body.setVelocityX(0);
         }
         if (cursors.up.isDown) {
-            beatriz.body.setVelocityY(-150);
+            beatriz.body.setVelocityY(-200);
         } else if (cursors.down.isDown) {
-            beatriz.body.setVelocityY(150);
+            beatriz.body.setVelocityY(200);
         } else {
             beatriz.body.setVelocityY(0);
         }
