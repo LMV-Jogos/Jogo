@@ -10,6 +10,7 @@ cena01.preload = function () {
     this.load.spritesheet("intro", "assets/introdução.png", {
         frameWidth: 800,
         frameHeight: 600
+
     });
     // carregar ícone tela fullscreen
     this.load.spritesheet('fullscreen', 'assets/fullscreen.png', { frameWidth: 46, frameHeight: 50 });
@@ -30,6 +31,8 @@ cena01.create = function () {
 
     setTimeout(() => {
         this.scene.start(cena1);
+        introducao.stop();
+
     }, 40000);
 
     // tocar música fundo 
@@ -65,6 +68,7 @@ cena01.create = function () {
                 button.setFrame(1);
                 this.scale.startFullscreen();
             }
+
         },
         this
     );
