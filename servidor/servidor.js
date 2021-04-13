@@ -19,7 +19,7 @@ io.on("connection", function (socket) {
     }
     io.emit("jogadores", jogadores);
     console.log("+Lista de jogadores: %s", jogadores);
-/*
+
     // Sinalização de áudio: oferta
     socket.on("offer", (socketId, description) => {
         socket.to(socketId).emit("offer", socket.id, description);
@@ -33,7 +33,7 @@ io.on("connection", function (socket) {
     // Sinalização de áudio: envio dos candidatos de caminho
     socket.on("candidate", (socketId, signal) => {
         socket.to(socketId).emit("candidate", signal);
-    }); */
+    }); 
 
     // Disparar evento quando jogador sair da partida
     socket.on("disconnect", function () {

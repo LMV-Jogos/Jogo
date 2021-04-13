@@ -20,14 +20,13 @@ var cofre;
 var ganho;
 var perda;
 var jogador;
-/*
 var ice_servers = {
     iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
 };
 var localConnection;
 var remoteConnection;
 var midias;
-const audio = document.querySelector("audio");*/
+const audio = document.querySelector("audio");
 
 cena1.preload = function () {
     // tilesets
@@ -345,13 +344,13 @@ cena1.create = function () {
 
                 // Câmera seguindo o personagem 1
                 cameras.main.startFollow(agatha);
-                /*
+
                 navigator.mediaDevices
                     .getUserMedia({ video: false, audio: true })
                     .then((stream) => {
                         midias = stream;
                     })
-                    .catch((error) => console.log(error));*/
+                    .catch((error) => console.log(error));
 
             } else if (jogadores.segundo === self.socket.id) {
                 // Define jogador como o segundo
@@ -371,7 +370,7 @@ cena1.create = function () {
 
                 // Câmera seguindo o personagem 2
                 cameras.main.startFollow(beatriz);
-                /*
+
                 navigator.mediaDevices
                     .getUserMedia({ video: false, audio: true })
                     .then((stream) => {
@@ -399,13 +398,12 @@ cena1.create = function () {
                                 );
                             });
                     })
-                    .catch((error) => console.log(error));*/
+                    .catch((error) => console.log(error));
             }
             // Os dois jogadores estão conectados
             console.log(jogadores);
         }
     });
-    /*
     this.socket.on("offer", (socketId, description) => {
         remoteConnection = new RTCPeerConnection(ice_servers);
         midias
@@ -433,7 +431,7 @@ cena1.create = function () {
     socket.on("candidate", (candidate) => {
         const conn = localConnection || remoteConnection;
         conn.addIceCandidate(new RTCIceCandidate(candidate));
-    });*/
+    });
 
 
     // Desenhar o outro jogador
