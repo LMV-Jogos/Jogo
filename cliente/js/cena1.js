@@ -11,8 +11,8 @@ var up;
 var down;*/
 var trilha;
 var sup;
-var lives = 10;
-var lives1 = 10;
+var lives = 3;
+var lives1 = 3;
 var livesText;
 var livesText1;
 var virus;
@@ -259,7 +259,7 @@ cena1.create = function () {
 
     cofre.create(2500, 300, "cofre");
 
-    livesText = this.add.text(10, 10, "Vidas Agatha: 10", {
+    livesText = this.add.text(10, 10, "Vidas Agatha: 3", {
         font: "25px monospace",
         fill: "#000",
         padding: { x: 10, y: 10 },
@@ -267,7 +267,7 @@ cena1.create = function () {
     });
     livesText.setScrollFactor(0);
 
-    livesText1 = this.add.text(400, 10, "Vidas Beatriz: 10", {
+    livesText1 = this.add.text(400, 10, "Vidas Beatriz: 3", {
         font: "25px monospace",
         fill: "#000",
         padding: { x: 10, y: 10 },
@@ -448,14 +448,14 @@ cena1.update = function (time, delta) {
     // Vida agatha, caso chegue a 0 o jogo acaba e a tela de encerramento inicia
     if (lives <= 0) {
         this.scene.start(cena2);
-        lives = 2
+        lives = 3
         trilha.stop();
     }
 
     // Vida beatriz, caso chegue a 0 o jogo acaba e a tela de encerramento inicia
     if (lives1 <= 0) {
         this.scene.start(cena2);
-        lives = 2
+        lives = 3
         trilha.stop();
     }
 }

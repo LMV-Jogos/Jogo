@@ -3,7 +3,6 @@ import { cena1 } from "./cena1.js";
 var cena01 = new Phaser.Scene("Cena 01");
 
 var intro;
-var timedEvent;
 var introducao;
 
 cena01.preload = function () {
@@ -17,6 +16,9 @@ cena01.preload = function () {
 
     // carregar música de fundo
     this.load.audio("introducao", "assets/introducao.mp3");
+    this.load.audio("click", "assets/click.mp3");
+
+    this.load.image("botão", "assets/botao.png");
 }
 
 cena01.create = function () {
@@ -39,6 +41,18 @@ cena01.create = function () {
     introducao = this.sound.add("introducao");
     introducao.loop = true;
     introducao.play();
+
+    //click = this.sound.add("click");
+
+    var pular = this.add.image(710, 550, "botão").setInteractive()
+    pular.on(
+        "pointerdown",
+        function () {
+            this.scene.start(cena1);
+            introducao.stop();
+        },
+        this
+    );
 
     // ativar/desativar tela cheia
     var button = this.add.image(800, 0, "fullscreen", 0).setOrigin(1, 0).setInteractive().setScrollFactor(0);
