@@ -30,12 +30,12 @@ cena01.create = function () {
     });
     intro = this.add.sprite(400, 300, "intro");
     intro.play("intro");
-
+    /*
     setTimeout(() => {
         this.scene.start(cena1);
         introducao.stop();
 
-    }, 40000);
+    }, 40000);*/
 
     // tocar música fundo 
     introducao = this.sound.add("introducao");
