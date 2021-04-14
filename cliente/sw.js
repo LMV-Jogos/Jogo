@@ -30,6 +30,7 @@ const precacheResources = [
     "./js/cena01.js",
     "./js/cena1.js",
     "./js/cena2.js",
+    "./js/cena3.js",
     "./js/index.js",
     "./manifest.json",
     "./sw.js",

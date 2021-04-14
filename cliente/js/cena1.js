@@ -344,7 +344,7 @@ cena1.create = function () {
                 physics.add.collider(agatha, virus, hitVirus, null, this);
 
                 // Detecção de colisão e disparo de evento: cofre
-                physics.add.overlap(agatha, cofre, hitCofre);
+                physics.add.overlap(agatha, cofre, hitCofre, null, this);
 
                 // Câmera seguindo o personagem 1
                 cameras.main.startFollow(agatha);

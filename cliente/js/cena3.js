@@ -9,8 +9,8 @@ cena3.preload = function () {
 cena3.create = function () {
     this.add.image(400, 300, 'fundo');
 
-    this.add.text(16, 16, "Você finalizaou o jogo!", {
-        font: "25px monospace",
+    this.add.text(100, 122, "Você finalizou o jogo!", {
+        font: "52px monospace",
         fill: "#000000",
         padding: { x: 20, y: 10 },
         backgroundColor: "#ffffff"
