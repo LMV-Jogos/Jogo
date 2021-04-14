@@ -3,6 +3,7 @@ import { cena0 } from "./cena0.js";
 import { cena01 } from "./cena01.js";
 import { cena1 } from "./cena1.js";
 import { cena2 } from "./cena2.js";
+import { cena3 } from "./cena3.js";
 
 //configuração do jogo
 const config = {
@@ -23,7 +24,7 @@ const config = {
         width: 800,
         height: 600,
     },
-    scene: [cena0, cena01, cena1, cena2],
+    scene: [cena0, cena01, cena1, cena2, cena3],
 }
 
 // Criar o objeto principal

@@ -1,4 +1,5 @@
 import { cena2 } from "./cena2.js";
+import { cena3 } from "./cena3.js";
 
 var cena1 = new Phaser.Scene("Cena 1");
 
@@ -262,9 +263,9 @@ cena1.create = function () {
 
     perda = this.sound.add("perda");
 
-    cofre = this.physics.add.staticGroup();
+    cofre = this.physics.add.group();
 
-    cofre.create(2500, 300, "cofre");
+    cofre.create(300, 1700, "cofre");
 
     livesText = this.add.text(10, 10, "Vidas Agatha: 3", {
         font: "25px monospace",
@@ -341,6 +342,9 @@ cena1.create = function () {
 
                 // Detecção de colisão e disparo de evento: vírus
                 physics.add.collider(agatha, virus, hitVirus, null, this);
+
+                // Detecção de colisão e disparo de evento: cofre
+                physics.add.overlap(agatha, cofre, hitCofre);
 
                 // Câmera seguindo o personagem 1
                 cameras.main.startFollow(agatha);
@@ -598,6 +602,10 @@ function hitVirus1(beatriz, virus) {
     livesText1.setText("Vidas Beatriz: " + lives1);
 
     //beatriz.setTint(0xffffff);   
+}
+
+function hitCofre(agatha, cofre) {
+    this.scene.start(cena3);
 }
 
 export { cena1 };
