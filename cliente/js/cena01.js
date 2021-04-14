@@ -18,7 +18,7 @@ cena01.preload = function () {
     this.load.audio("introducao", "assets/introducao.mp3");
     this.load.audio("click", "assets/click.mp3");
 
-    this.load.image("botão", "assets/botao.png");
+    this.load.image("pular", "assets/pular.png");
 }
 
 cena01.create = function () {
@@ -44,7 +44,7 @@ cena01.create = function () {
 
     //click = this.sound.add("click");
 
-    var pular = this.add.image(710, 550, "botão").setInteractive()
+    var pular = this.add.image(710, 550, "pular").setInteractive()
     pular.on(
         "pointerdown",
         function () {
