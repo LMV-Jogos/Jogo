@@ -275,7 +275,7 @@ cena1.create = function () {
 
     cofre.create(2550, 130, "cofre");
 
-    hist = this.add.image(400, 300, "teste", 0).setScrollFactor(0);
+    hist = this.add.image(360, 449, "teste", 0).setScrollFactor(0);
     hist.setFrame(0);
 
     livesText = this.add.text(10, 10, "Vidas Agatha: 3", {
