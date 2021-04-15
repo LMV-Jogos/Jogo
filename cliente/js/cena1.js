@@ -58,6 +58,12 @@ cena1.preload = function () {
     this.load.spritesheet('fullscreen', 'assets/fullscreen.png', { frameWidth: 46, frameHeight: 50 });
 
     this.load.image("cofre", "assets/cofre.png");
+    
+    this.load.spritesheet("up", "assets/up.png", { frameWidth: 60, frameHeight: 60 });
+    this.load.spritesheet("down", "assets/down.png", { frameWidth: 60, frameHeight: 60 });
+    this.load.spritesheet("right", "assets/right.png", { frameWidth: 60, frameHeight: 60 });
+    this.load.spritesheet("left", "assets/left.png", { frameWidth: 60, frameHeight: 60 });
+
     this.load.spritesheet("teste", "assets/teste.png", { frameWidth: 300, frameHeight: 300 });
 
 }
@@ -267,7 +273,7 @@ cena1.create = function () {
 
     cofre = this.physics.add.group();
 
-    cofre.create(300, 1700, "cofre");
+    cofre.create(2550, 130, "cofre");
 
     hist = this.add.image(400, 300, "teste", 0).setScrollFactor(0);
     hist.setFrame(0);
