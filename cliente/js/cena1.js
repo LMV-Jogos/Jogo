@@ -20,6 +20,7 @@ var virus;
 var cofre;
 var ganho;
 var perda;
+var hist;
 var jogador;
 var ice_servers = {
     iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
@@ -57,6 +58,7 @@ cena1.preload = function () {
     this.load.spritesheet('fullscreen', 'assets/fullscreen.png', { frameWidth: 46, frameHeight: 50 });
 
     this.load.image("cofre", "assets/cofre.png");
+    this.load.spritesheet("teste", "assets/teste.png", { frameWidth: 300, frameHeight: 300 });
 
 }
 
@@ -266,6 +268,9 @@ cena1.create = function () {
     cofre = this.physics.add.group();
 
     cofre.create(300, 1700, "cofre");
+
+    hist = this.add.image(400, 300, "teste", 0).setScrollFactor(0);
+    hist.setFrame(0);
 
     livesText = this.add.text(10, 10, "Vidas Agatha: 3", {
         font: "25px monospace",
@@ -605,7 +610,10 @@ function hitVirus1(beatriz, virus) {
 }
 
 function hitCofre(agatha, cofre) {
-    this.scene.start(cena3);
+    hist.setFrame(1);
+    setTimeout(() => {
+        hist.setFrame(0);;
+    }, 5000);
 }
 
 export { cena1 };
