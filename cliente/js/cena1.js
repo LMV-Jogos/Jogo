@@ -18,9 +18,19 @@ var livesText;
 var livesText1;
 var virus;
 var cofre;
+var dois;
+var tres;
+var cinco;
+var seis;
+var oito;
 var ganho;
 var perda;
 var hist;
+var hist2;
+var hist3;
+var hist5;
+var hist6;
+var hist8;
 var jogador;
 var ice_servers = {
     iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
@@ -58,13 +68,19 @@ cena1.preload = function () {
     this.load.spritesheet('fullscreen', 'assets/fullscreen.png', { frameWidth: 46, frameHeight: 50 });
 
     this.load.image("cofre", "assets/cofre.png");
-    
+    this.load.image("teste", "assets/teste.png");
+
     this.load.spritesheet("up", "assets/up.png", { frameWidth: 60, frameHeight: 60 });
     this.load.spritesheet("down", "assets/down.png", { frameWidth: 60, frameHeight: 60 });
     this.load.spritesheet("right", "assets/right.png", { frameWidth: 60, frameHeight: 60 });
     this.load.spritesheet("left", "assets/left.png", { frameWidth: 60, frameHeight: 60 });
 
-    this.load.spritesheet("teste", "assets/teste.png", { frameWidth: 300, frameHeight: 300 });
+    this.load.spritesheet("fim", "assets/fim.png", { frameWidth: 359.5, frameHeight: 520 });
+    this.load.spritesheet("dois", "assets/dois.png", { frameWidth: 360, frameHeight: 444 });
+    this.load.spritesheet("tres", "assets/tres.png", { frameWidth: 360, frameHeight: 425 });
+    this.load.spritesheet("cinco", "assets/cinco.png", { frameWidth: 360, frameHeight: 488 });
+    this.load.spritesheet("seis", "assets/seis.png", { frameWidth: 360, frameHeight: 449 });
+    this.load.spritesheet("oito", "assets/oito.png", { frameWidth: 360, frameHeight: 436 });
 
 }
 
@@ -271,12 +287,32 @@ cena1.create = function () {
 
     perda = this.sound.add("perda");
 
-    cofre = this.physics.add.group();
+    cofre = this.physics.add.image(2550, 130, "cofre");
+    dois = this.physics.add.image(438, 290, "teste");
+    tres = this.physics.add.image(1318, 1575, "teste");
+    cinco = this.physics.add.image(1140, 960, "teste");
+    seis = this.physics.add.image(896, 96, "teste");
+    oito = this.physics.add.image(1780, 820, "teste");
 
-    cofre.create(2550, 130, "cofre");
-
-    hist = this.add.image(360, 449, "teste", 0).setScrollFactor(0);
+    hist = this.add.image(400, 300, "fim", 0).setScrollFactor(0);
     hist.setFrame(0);
+
+    hist2 = this.add.image(400, 300, "dois", 0).setScrollFactor(0);
+    hist2.setFrame(0);
+
+    hist3 = this.add.image(400, 300, "tres", 0).setScrollFactor(0);
+    hist3.setFrame(0);
+
+    hist5 = this.add.image(400, 300, "cinco", 0).setScrollFactor(0);
+    hist5.setFrame(0);
+
+    hist6 = this.add.image(400, 300, "seis", 0).setScrollFactor(0);
+    hist6.setFrame(0);
+
+    hist8 = this.add.image(400, 300, "oito", 0).setScrollFactor(0);
+    hist8.setFrame(0);
+
+
 
     livesText = this.add.text(10, 10, "Vidas Agatha: 3", {
         font: "25px monospace",
@@ -286,7 +322,7 @@ cena1.create = function () {
     });
     livesText.setScrollFactor(0);
 
-    livesText1 = this.add.text(400, 10, "Vidas Beatriz: 3", {
+    livesText1 = this.add.text(500, 10, "Vidas Beatriz: 3", {
         font: "25px monospace",
         fill: "#000",
         padding: { x: 10, y: 10 },
@@ -357,6 +393,21 @@ cena1.create = function () {
                 // Detecção de colisão e disparo de evento: cofre
                 physics.add.overlap(agatha, cofre, hitCofre, null, this);
 
+                // Detecção de colisão e disparo de evento: dois
+                physics.add.overlap(agatha, dois, hitDois, null, this);
+
+                // Detecção de colisão e disparo de evento: tres
+                physics.add.overlap(agatha, tres, hitTres, null, this);
+
+                // Detecção de colisão e disparo de evento: cinco
+                physics.add.overlap(agatha, cinco, hitCinco, null, this);
+
+                // Detecção de colisão e disparo de evento: seis
+                physics.add.overlap(agatha, seis, hitSeis, null, this);
+
+                // Detecção de colisão e disparo de evento: oitp
+                physics.add.overlap(agatha, oito, hitOito, null, this);
+
                 // Câmera seguindo o personagem 1
                 cameras.main.startFollow(agatha);
 
@@ -382,6 +433,24 @@ cena1.create = function () {
 
                 // Detecção de colisão e disparo de evento: vírus
                 physics.add.collider(beatriz, virus, hitVirus1, null, this);
+
+                // Detecção de colisão e disparo de evento: cofre
+                physics.add.overlap(beatriz, cofre, hitCofre1, null, this);
+
+                // Detecção de colisão e disparo de evento: dois
+                physics.add.overlap(beatriz, dois, hitDois1, null, this);
+
+                // Detecção de colisão e disparo de evento: tres
+                physics.add.overlap(beatriz, tres, hitTres1, null, this);
+
+                // Detecção de colisão e disparo de evento: cinco
+                physics.add.overlap(beatriz, cinco, hitCinco1, null, this);
+
+                // Detecção de colisão e disparo de evento: seis
+                physics.add.overlap(beatriz, seis, hitSeis1, null, this);
+
+                // Detecção de colisão e disparo de evento: oitp
+                physics.add.overlap(beatriz, oito, hitOito1, null, this);
 
                 // Câmera seguindo o personagem 2
                 cameras.main.startFollow(beatriz);
@@ -619,7 +688,84 @@ function hitCofre(agatha, cofre) {
     hist.setFrame(1);
     setTimeout(() => {
         hist.setFrame(0);;
-    }, 5000);
+    }, 100);
+}
+
+function hitCofre1(beatriz, cofre) {
+    hist.setFrame(1);
+    setTimeout(() => {
+        hist.setFrame(0);;
+    }, 100);
+}
+
+function hitDois(agatha, dois) {
+    hist2.setFrame(1);
+    setTimeout(() => {
+        hist2.setFrame(0);;
+    }, 100);
+}
+
+function hitDois1(beatriz, dois) {
+    hist2.setFrame(1);
+    setTimeout(() => {
+        hist2.setFrame(0);;
+    }, 100);
+}
+
+function hitTres(agatha, tres) {
+    hist3.setFrame(1);
+    setTimeout(() => {
+        hist3.setFrame(0);;
+    }, 100);
+}
+
+function hitTres1(beatriz, tres) {
+    hist3.setFrame(1);
+    setTimeout(() => {
+        hist3.setFrame(0);;
+    }, 100);
+}
+
+function hitCinco(agatha, cinco) {
+    hist5.setFrame(1);
+    setTimeout(() => {
+        hist5.setFrame(0);;
+    }, 100);
+}
+
+function hitCinco1(beatriz, cinco) {
+    hist5.setFrame(1);
+    setTimeout(() => {
+        hist5.setFrame(0);;
+    }, 100);
+}
+
+function hitSeis(agatha, seis) {
+    hist6.setFrame(1);
+    setTimeout(() => {
+        hist6.setFrame(0);;
+    }, 100);
+}
+
+function hitSeis1(beatriz, seis) {
+    hist6.setFrame(1);
+    setTimeout(() => {
+        hist6.setFrame(0);;
+    }, 100);
+}
+
+function hitOito(agatha, oito) {
+    hist8.setFrame(1);
+    setTimeout(() => {
+        hist8.setFrame(0);;
+    }, 100);
+}
+
+function hitOito1(beatriz, oito) {
+    hist8.setFrame(1);
+    setTimeout(() => {
+        hist8.setFrame(0);;
+    }, 100);
 }
 
 export { cena1 };
