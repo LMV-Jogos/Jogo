@@ -68,7 +68,7 @@ cena1.preload = function () {
     this.load.spritesheet('fullscreen', 'assets/fullscreen.png', { frameWidth: 46, frameHeight: 50 });
 
     this.load.image("cofre", "assets/cofre.png");
-    this.load.image("teste", "assets/teste.png");
+    this.load.spritesheet("teste", "assets/teste.png", { frameWidth: 40, frameHeight: 40 });
 
     this.load.spritesheet("up", "assets/up.png", { frameWidth: 60, frameHeight: 60 });
     this.load.spritesheet("down", "assets/down.png", { frameWidth: 60, frameHeight: 60 });
@@ -288,11 +288,16 @@ cena1.create = function () {
     perda = this.sound.add("perda");
 
     cofre = this.physics.add.image(2550, 130, "cofre");
-    dois = this.physics.add.image(438, 290, "teste");
-    tres = this.physics.add.image(1318, 1575, "teste");
-    cinco = this.physics.add.image(1140, 960, "teste");
-    seis = this.physics.add.image(896, 96, "teste");
-    oito = this.physics.add.image(1780, 820, "teste");
+    dois = this.physics.add.image(438, 290, "teste", 0);
+    dois.setFrame(0);
+    tres = this.physics.add.image(1318, 1575, "teste", 0);
+    tres.setFrame(0);
+    cinco = this.physics.add.image(1140, 960, "teste", 0);
+    cinco.setFrame(0);
+    seis = this.physics.add.image(896, 96, "teste", 0);
+    seis.setFrame(0);
+    oito = this.physics.add.image(1780, 820, "teste", 0);
+    oito.setFrame(0);
 
     hist = this.add.image(400, 300, "fim", 0).setScrollFactor(0);
     hist.setFrame(0);
