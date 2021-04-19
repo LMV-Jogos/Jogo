@@ -705,9 +705,7 @@ function hitCofre(agatha, cofre) {
 
 function hitCofre1(beatriz, cofre) {
     hist.setFrame(1);
-    setTimeout(() => {
-        hist.setFrame(0);;
-    }, 100);
+    achouCofre = 1;
 }
 
 function hitDois(agatha, dois) {
