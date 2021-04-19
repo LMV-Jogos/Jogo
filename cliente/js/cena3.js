@@ -2,20 +2,25 @@ import { cena0 } from "./cena0.js";
 
 var cena3 = new Phaser.Scene("Cena 3");
 
+var fim;
+
 cena3.preload = function () {
-    this.load.image("fundo", "assets/fundoazul.png");
+    this.load.spritesheet("encerramento", "assets/encerramento.png", {
+        frameWidth: 800,
+        frameHeight: 600
+    });
 }
 
 cena3.create = function () {
-    this.add.image(400, 300, 'fundo');
+    this.anims.create({
+        key: "encerramento",
+        frameRate: 0.2,
+        frames: this.anims.generateFrameNumbers("encerramento", { start: 0, end: 3 }),
+        repeat: 0
+    });
 
-    this.add.text(100, 122, "Você finalizou o jogo!", {
-        font: "52px monospace",
-        fill: "#000000",
-        padding: { x: 20, y: 10 },
-        backgroundColor: "#ffffff"
-    })
-
+    fim = this.add.sprite(400, 300, "encerramento");
+    fim.play("encerramento");
 }
 
 cena3.update = function () { };

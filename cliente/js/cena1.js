@@ -693,7 +693,9 @@ function hitCofre(agatha, cofre) {
     hist.setFrame(1);
     setTimeout(() => {
         hist.setFrame(0);;
-    }, 100);
+        this.scene.start(cena3);
+        trilha.stop();
+    }, 3000);
 }
 
 function hitCofre1(beatriz, cofre) {
