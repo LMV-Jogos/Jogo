@@ -14,7 +14,7 @@ cena3.preload = function () {
 cena3.create = function () {
     this.anims.create({
         key: "encerramento",
-        frameRate: 0.2,
+        frameRate: 0.1,
         frames: this.anims.generateFrameNumbers("encerramento", { start: 0, end: 3 }),
         repeat: 0
     });

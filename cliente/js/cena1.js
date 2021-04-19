@@ -31,6 +31,7 @@ var hist3;
 var hist5;
 var hist6;
 var hist8;
+var achouCofre = 0;
 var jogador;
 var ice_servers = {
     iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
@@ -621,6 +622,14 @@ cena1.update = function (time, delta) {
         lives = 3
         trilha.stop();
     }
+
+    if (achouCofre === 1) {
+        setTimeout(() => {
+            this.scene.start(cena3);
+            achouCofre = 0;
+            trilha.stop();
+        }, 20000);
+    }
 }
 
 // coletar supressores
@@ -691,11 +700,7 @@ function hitVirus1(beatriz, virus) {
 
 function hitCofre(agatha, cofre) {
     hist.setFrame(1);
-    setTimeout(() => {
-        hist.setFrame(0);;
-        this.scene.start(cena3);
-        trilha.stop();
-    }, 3000);
+    achouCofre = 1;
 }
 
 function hitCofre1(beatriz, cofre) {
