@@ -4,12 +4,11 @@ import { cena3 } from "./cena3.js";
 var cena1 = new Phaser.Scene("Cena 1");
 
 var agatha;
-var cursors;
 var beatriz;
-/*var left;
-var right;
-var up;
-var down;*/
+//var cursors;
+var pointer;
+var touchX;
+var touchY;
 var trilha;
 var sup;
 var lives = 3;
@@ -71,11 +70,13 @@ cena1.preload = function () {
     this.load.image("cofre", "assets/cofre.png");
     this.load.spritesheet("teste", "assets/teste.png", { frameWidth: 40, frameHeight: 40 });
 
-    this.load.spritesheet("up", "assets/up.png", { frameWidth: 60, frameHeight: 60 });
-    this.load.spritesheet("down", "assets/down.png", { frameWidth: 60, frameHeight: 60 });
-    this.load.spritesheet("right", "assets/right.png", { frameWidth: 60, frameHeight: 60 });
-    this.load.spritesheet("left", "assets/left.png", { frameWidth: 60, frameHeight: 60 });
+    // controles para toque em tela
+    this.load.spritesheet("cima", "assets/up.png", { frameWidth: 60, frameHeight: 60 });
+    this.load.spritesheet("baixo", "assets/down.png", { frameWidth: 60, frameHeight: 60 });
+    this.load.spritesheet("direita", "assets/right.png", { frameWidth: 60, frameHeight: 60 });
+    this.load.spritesheet("esquerda", "assets/left.png", { frameWidth: 60, frameHeight: 60 });
 
+    // história
     this.load.spritesheet("fim", "assets/fim.png", { frameWidth: 359.5, frameHeight: 520 });
     this.load.spritesheet("dois", "assets/dois.png", { frameWidth: 360, frameHeight: 444 });
     this.load.spritesheet("tres", "assets/tres.png", { frameWidth: 360, frameHeight: 425 });
@@ -223,12 +224,11 @@ cena1.create = function () {
         repeat: -1
     });
 
-    cursors = this.input.keyboard.createCursorKeys();
-    /*up = this.input.keyboard.addKey("W");
-    left = this.input.keyboard.addKey("A");
-    right = this.input.keyboard.addKey("D");
-    down = this.input.keyboard.addKey("S");
-    */
+    //cursors = this.input.keyboard.createCursorKeys();
+
+    // Interação por toque de tela (até 2 toques simultâneos: 0 a 1)
+    pointer = this.input.addPointer(1);
+
     sup = this.physics.add.group();
 
     sup.create(200, 1750, "sup");
@@ -369,6 +369,24 @@ cena1.create = function () {
         this
     );
 
+    // D-pad
+    var esquerda = this.add
+        .image(50, 550, "esquerda", 0)
+        .setInteractive()
+        .setScrollFactor(0);
+    var direita = this.add
+        .image(125, 550, "direita", 0)
+        .setInteractive()
+        .setScrollFactor(0);
+    var cima = this.add
+        .image(750, 475, "cima", 0)
+        .setInteractive()
+        .setScrollFactor(0);
+    var baixo = this.add
+        .image(750, 550, "baixo", 0)
+        .setInteractive()
+        .setScrollFactor(0);
+
     // Conectar no servidor via WebSocket
     this.socket = io();
 
@@ -417,6 +435,66 @@ cena1.create = function () {
                 // Câmera seguindo o personagem 1
                 cameras.main.startFollow(agatha);
 
+                // D-pad: para cada direção já os eventos
+                // para tocar a tela ("pointerover")
+                // e ao terminar essa interação ("pointerout")
+                esquerda.on("pointerover", () => {
+                    if (lives > 0) {
+                        esquerda.setFrame(1);
+                        agatha.setVelocityX(-200);
+                        agatha.anims.play("left", true);
+                    }
+                });
+                esquerda.on("pointerout", () => {
+                    if (lives > 0) {
+                        esquerda.setFrame(0);
+                        agatha.setVelocityX(0);
+                        agatha.anims.play("stopped", true);
+                    }
+                });
+                direita.on("pointerover", () => {
+                    if (lives > 0) {
+                        direita.setFrame(1);
+                        agatha.setVelocityX(200);
+                        agatha.anims.play("right", true);
+                    }
+                });
+                direita.on("pointerout", () => {
+                    if (lives > 0) {
+                        direita.setFrame(0);
+                        agatha.setVelocityX(0);
+                        agatha.anims.play("stopped", true);
+                    }
+                });
+                cima.on("pointerover", () => {
+                    if (lives > 0) {
+                        cima.setFrame(1);
+                        agatha.setVelocityY(-200);
+                        agatha.anims.play("up", true);
+                    }
+                });
+                cima.on("pointerout", () => {
+                    if (lives > 0) {
+                        cima.setFrame(0);
+                        agatha.setVelocityY(0);
+                        agatha.anims.play("stopped", true);
+                    }
+                });
+                baixo.on("pointerover", () => {
+                    if (lives > 0) {
+                        baixo.setFrame(1);
+                        agatha.setVelocityY(200);
+                        agatha.anims.play("down", true);
+                    }
+                });
+                baixo.on("pointerout", () => {
+                    if (lives > 0) {
+                        baixo.setFrame(0);
+                        agatha.setVelocityY(0);
+                        agatha.anims.play("stopped", true);
+                    }
+                });
+
                 navigator.mediaDevices
                     .getUserMedia({ video: false, audio: true })
                     .then((stream) => {
@@ -460,6 +538,66 @@ cena1.create = function () {
 
                 // Câmera seguindo o personagem 2
                 cameras.main.startFollow(beatriz);
+
+                // D-pad: para cada direção já os eventos
+                // para tocar a tela ("pointerover")
+                // e ao terminar essa interação ("pointerout")
+                esquerda.on("pointerover", () => {
+                    if (lives1 > 0) {
+                        esquerda.setFrame(1);
+                        beatriz.setVelocityX(-200);
+                        beatriz.anims.play("left1", true);
+                    }
+                });
+                esquerda.on("pointerout", () => {
+                    if (lives1 > 0) {
+                        esquerda.setFrame(0);
+                        beatriz.setVelocityX(0);
+                        beatriz.anims.play("stopped1", true);
+                    }
+                });
+                direita.on("pointerover", () => {
+                    if (lives1 > 0) {
+                        direita.setFrame(1);
+                        beatriz.setVelocityX(200);
+                        beatriz.anims.play("right1", true);
+                    }
+                });
+                direita.on("pointerout", () => {
+                    if (lives1 > 0) {
+                        direita.setFrame(0);
+                        beatriz.setVelocityX(0);
+                        beatriz.anims.play("stopped1", true);
+                    }
+                });
+                cima.on("pointerover", () => {
+                    if (lives1 > 0) {
+                        cima.setFrame(1);
+                        beatriz.setVelocityY(-200);
+                        beatriz.anims.play("up1", true);
+                    }
+                });
+                cima.on("pointerout", () => {
+                    if (lives1 > 0) {
+                        cima.setFrame(0);
+                        beatriz.setVelocityY(0);
+                        beatriz.anims.play("stopped1", true);
+                    }
+                });
+                baixo.on("pointerover", () => {
+                    if (lives1 > 0) {
+                        baixo.setFrame(1);
+                        beatriz.setVelocityY(200);
+                        beatriz.anims.play("down1", true);
+                    }
+                });
+                baixo.on("pointerout", () => {
+                    if (lives1 > 0) {
+                        baixo.setFrame(0);
+                        beatriz.setVelocityY(0);
+                        beatriz.anims.play("stopped1", true);
+                    }
+                });
 
                 navigator.mediaDevices
                     .getUserMedia({ video: false, audio: true })
@@ -541,7 +679,36 @@ cena1.create = function () {
 
 cena1.update = function (time, delta) {
 
+    let frame;
+    // Controle do personagem por direcionais
     if (jogador === 1) {
+        // Testa se há animação do oponente,
+        // caso contrário envia o primeiro frame (0)
+        try {
+            frame = agatha.anims.currentFrame.index;
+        } catch (e) {
+            frame = 0;
+        }
+        this.socket.emit("estadoDoJogador", {
+            frame: frame,
+            x: agatha.body.x,
+            y: agatha.body.y,
+        });
+    } else if (jogador === 2) {
+        // Testa se há animação do oponente,
+        // caso contrário envia o primeiro frame (0)
+        try {
+            frame = beatriz.anims.currentFrame.index;
+        } catch (e) {
+            frame = 0;
+        }
+        this.socket.emit("estadoDoJogador", {
+            frame: frame,
+            x: beatriz.body.x,
+            y: beatriz.body.y,
+        });
+    }
+    /*if (jogador === 1) {
         // Controle agatha
         if (cursors.left.isDown) {
             agatha.body.setVelocityX(-200);
@@ -607,7 +774,7 @@ cena1.update = function (time, delta) {
             x: beatriz.body.x,
             y: beatriz.body.y,
         });
-    }
+    }*/
 
     // Vida agatha, caso chegue a 0 o jogo acaba e a tela de encerramento inicia
     if (lives <= 0) {
